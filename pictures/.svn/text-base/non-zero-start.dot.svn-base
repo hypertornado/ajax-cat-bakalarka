@@ -1,0 +1,16 @@
+digraph G  {
+rankdir="LR";
+//label = "\"das ist ein kleines haus\"";
+b0 [shape=box label="what a\n--*--\n-0" style=filled fillcolor="#B8B8B8"];
+c0 [shape=box label="what a little\n--**-\n-12.43" style=filled fillcolor="#E8E8E8"];
+c1 [shape=box label="what a small\n--**-\n-11.59" style=filled fillcolor="#E8E8E8"];
+c2 [shape=box label="what a this\n*-*--\n-50.22"];
+d0 [shape=box label="what a little house\n--***\n-23.15" style=filled fillcolor="#E8E8E8"];
+d1 [shape=box label="what a small house\n--***\n-20.87" style=filled fillcolor="#E8E8E8"];
+
+b0 -> c0;
+b0 -> c1;
+b0 -> c2;
+c0 -> d0
+c1 -> d1;
+}

@@ -1,0 +1,16 @@
+digraph G  {
+ranksep=0.2;
+input [ label="Input" ];
+output [ label="Output" ];
+parallel [ label="Parallel Texts" ];
+monolingual [ label="Monolingual Texts" ];
+tm [ label="Translation Model" ];
+lm [ label="Language Model" ];
+search [shape=box label="Global Search\nfor sentence with highest probability"];
+
+input -> search -> output;
+parallel -> tm -> search;
+monolingual -> lm -> search;
+
+{ rank=same;  input; search; output }
+}

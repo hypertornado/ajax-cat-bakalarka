@@ -1,0 +1,28 @@
+©ablona pro sazbu diplomové práce v LaTeXu
+Vytvoøil Martin Mare¹ <mj@ucw.cz> roku 2011
+Tento soubor je povoleno libovolnì ¹íøit, pou¾ívat a upravovat.
+Pokud máte jakékoliv pøipomínky nebo návrhy na vylep¹ení, dejte mi prosím vìdìt.
+--------------------------------------------------------------------------------
+
+Obecná fakultní pravidla pro úpravu diplomových prací najdete v souboru
+dp_uprava.pdf. Tento formát pro LaTeX se jimi øídí a sna¾í se dùle¾ité vìci
+pøipomínat komentáøi. Pøesto si ale celá pravidla pøeètìte -- napøíklad úprava
+desek práce je popsána pouze tam.
+
+Pokud LaTeX je¹tì neznáte, na webu naleznete mnoho úvodních textù.
+Mnì se nejvíce osvìdèil http://en.wikibooks.org/wiki/LaTeX. Pár poznámek
+k TeXové sazbì najdete také zde v souboru ukazka.tex.
+
+Základní nastavení sazby naleznete v souboru prace.tex, ten se také
+odkazuje na ostatní soubory s jednotlivými kapitolami práce. Peèlivì
+si hlavní soubor pøeètìte a doplòte v¹echny chybìjící údaje.
+
+Pokud pracujete na Unixovém systému, mù¾e se vám hodit ukázkový Makefile --
+staèí spustit program "make" a ten u¾ se postará o pøelo¾ení v¹ech souborù
+TeXem.
+
+Práci je potøeba kompilovat csLaTeXem, ten je ve vìt¹inì instalací TeXu
+dostupný v balíèku pro podporu èe¹tiny a sloven¹tiny. Pokud csLaTeX nejste
+schopni rozbìhnout, mù¾ete zkusit místo toho pou¾ít klasický LaTeX s balíèkem
+babel (viz zakomentovaná èást na zaèátku souboru babel.tex), ov¹em sazba èeských
+písmen bude o nìco o¹klivìj¹í.
