@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=cslatex 2011.4.17)  14 MAY 2011 13:52
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=cslatex 2011.4.17)  14 MAY 2011 15:54
 entering extended mode
  %&-line parsing enabled.
 **prace.tex
@@ -487,21 +487,17 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 
 ] [3]
 Kapitola 1.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <5> on input line 292.
 [4
 
-]
-Overfull \hbox (248.93303pt too wide) in paragraph at lines 312--313
-[]\IL2/cmr/m/n/12 Výpoèetní vý-kon po-èí-ta-èù stá-le ros-te rych-los-tí Mo-o-r
-e-o-va zá-ko-na (ftp://download.intel.com/research/silicon/moorespaper.pdf),
- []
-
-
-Overfull \hbox (0.30853pt too wide) in paragraph at lines 317--318
+] [5]
+Overfull \hbox (0.30853pt too wide) in paragraph at lines 321--322
 \IL2/cmr/m/n/12 CAT, ne-bo-li computer-aided translati-on, èi computer-assisted
  translati-on je zkrat-
  []
 
-[5] [6]
+[6]
 Kapitola 2.
 File: pictures/phrase-based.eps Graphic file (type eps)
 <pictures/phrase-based.eps>
@@ -551,12 +547,12 @@ LaTeX Warning: Empty `thebibliography' environment on input line 16.
 ] (./prace.aux (./zaver.aux)
 (./literatura.aux)) ) 
 Here is how much of TeX's memory you used:
- 5560 strings out of 494938
- 74243 string characters out of 1181145
- 146713 words of memory out of 3000000
+ 5561 strings out of 494938
+ 74258 string characters out of 1181145
+ 147374 words of memory out of 3000000
  8782 multiletter control sequences out of 15000+50000
- 14988 words of font info for 38 fonts, out of 3000000 for 9000
+ 15538 words of font info for 39 fonts, out of 3000000 for 9000
  24 hyphenation exceptions out of 8191
- 38i,6n,36p,1665b,345s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 38i,8n,36p,1665b,345s stack positions out of 5000i,500n,10000p,200000b,50000s
 
-Output written on prace.dvi (21 pages, 59656 bytes).
+Output written on prace.dvi (21 pages, 62196 bytes).
