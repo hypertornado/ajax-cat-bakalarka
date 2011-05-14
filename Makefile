@@ -7,9 +7,6 @@ all: prace.pdf
 prace.pdf: prace.ps
 	ps2pdf $< $@
 
-%.eps: %.dot
-	dot -Tps $< > $@
-
 prace.ps: prace.dvi
 	dvips -o $@ -D600 -t a4 $<
 

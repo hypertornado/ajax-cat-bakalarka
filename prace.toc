@@ -7,14 +7,20 @@
 \contentsline {section}{\numberline {1.5}Moses}{6}{section.1.5}
 \contentsline {chapter}{\numberline {2}Moses}{7}{chapter.2}
 \contentsline {section}{\numberline {2.1}Princip fr\IeC {\'a}zov\IeC {\'e}ho p\IeC {\v r}ekladu}{7}{section.2.1}
-\contentsline {section}{\numberline {2.2}Jazykov\IeC {\'y} a p\IeC {\v r}ekladov\IeC {\'y} model}{7}{section.2.2}
-\contentsline {section}{\numberline {2.3}Hled\IeC {\'a}n\IeC {\'\i } nejlep\IeC {\v s}\IeC {\'\i }ch hypot\IeC {\'e}z}{7}{section.2.3}
-\contentsline {section}{\numberline {2.4}Roz\IeC {\v s}\IeC {\'\i }\IeC {\v r}en\IeC {\'\i } Mosese}{8}{section.2.4}
-\contentsline {chapter}{\numberline {3}Implementace}{9}{chapter.3}
-\contentsline {section}{\numberline {3.1}Instalace serverov\IeC {\'e} \IeC {\v c}\IeC {\'a}sti}{9}{section.3.1}
-\contentsline {section}{\numberline {3.2}Instalace klientsk\IeC {\'e} \IeC {\v c}\IeC {\'a}sti}{9}{section.3.2}
-\contentsline {chapter}{Z\IeC {\'a}v\IeC {\v e}r}{10}{chapter*.3}
-\contentsline {chapter}{Seznam pou\IeC {\v z}it\IeC {\'e} literatury}{11}{chapter*.4}
-\contentsline {chapter}{Seznam tabulek}{12}{chapter*.5}
-\contentsline {chapter}{Seznam pou\IeC {\v z}it\IeC {\'y}ch zkratek}{13}{chapter*.6}
-\contentsline {chapter}{P\IeC {\v r}\IeC {\'\i }lohy}{14}{chapter*.7}
+\contentsline {subsection}{\numberline {2.1.1}Jazykov\IeC {\'y} a p\IeC {\v r}ekladov\IeC {\'y} model}{7}{subsection.2.1.1}
+\contentsline {subsection}{\numberline {2.1.2}Hled\IeC {\'a}n\IeC {\'\i } nejlep\IeC {\v s}\IeC {\'\i }ch hypot\IeC {\'e}z}{7}{subsection.2.1.2}
+\contentsline {section}{\numberline {2.2}Roz\IeC {\v s}\IeC {\'\i }\IeC {\v r}en\IeC {\'\i } Mosese}{9}{section.2.2}
+\contentsline {chapter}{\numberline {3}Implementace serverov\IeC {\'e} \IeC {\v c}\IeC {\'a}sti}{10}{chapter.3}
+\contentsline {section}{\numberline {3.1}Roz\IeC {\v s}\IeC {\'\i }\IeC {\v r}en\IeC {\'\i } Mosese}{10}{section.3.1}
+\contentsline {subsection}{\numberline {3.1.1}Jak funguje Moses}{10}{subsection.3.1.1}
+\contentsline {chapter}{\numberline {4}Implementace serverov\IeC {\'e} \IeC {\v c}\IeC {\'a}sti}{11}{chapter.4}
+\contentsline {section}{\numberline {4.1}Instalace}{11}{section.4.1}
+\contentsline {section}{\numberline {4.2}Virtu\IeC {\'a}ln\IeC {\'\i } syst\IeC {\'e}m}{11}{section.4.2}
+\contentsline {section}{\numberline {4.3}Instalace Mosese}{11}{section.4.3}
+\contentsline {section}{\numberline {4.4}Instalace serverov\IeC {\'e} \IeC {\v c}\IeC {\'a}sti}{11}{section.4.4}
+\contentsline {section}{\numberline {4.5}Instalace klientsk\IeC {\'e} \IeC {\v c}\IeC {\'a}sti}{11}{section.4.5}
+\contentsline {chapter}{Z\IeC {\'a}v\IeC {\v e}r}{12}{chapter*.3}
+\contentsline {chapter}{Seznam pou\IeC {\v z}it\IeC {\'e} literatury}{13}{chapter*.4}
+\contentsline {chapter}{Seznam tabulek}{14}{chapter*.5}
+\contentsline {chapter}{Seznam pou\IeC {\v z}it\IeC {\'y}ch zkratek}{15}{chapter*.6}
+\contentsline {chapter}{P\IeC {\v r}\IeC {\'\i }lohy}{16}{chapter*.7}

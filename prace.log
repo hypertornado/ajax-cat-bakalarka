@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=cslatex 2011.4.17)  9 MAY 2011 20:58
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=cslatex 2011.4.17)  14 MAY 2011 13:52
 entering extended mode
  %&-line parsing enabled.
 **prace.tex
@@ -410,30 +410,30 @@ File: pdfmark.def 2009/10/09 v6.79a Hyperref definitions for pdfmark specials
 \pdf@defaulttoks=\toks28
 \Fld@listcount=\count94
 )) (./prace.aux
-(./uvod.aux) (./kap1.aux) (./kap2.aux) (./kap3.aux) (./kap4.aux) (./zaver.aux)
-(./literatura.aux))
+(./zaver.aux) (./literatura.aux))
 \openout1 = `prace.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 74.
-LaTeX Font Info:    ... okay on input line 74.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 74.
-LaTeX Font Info:    ... okay on input line 74.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 74.
-LaTeX Font Info:    ... okay on input line 74.
-LaTeX Font Info:    Checking defaults for IL2/cmr/m/n on input line 74.
-LaTeX Font Info:    ... okay on input line 74.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 74.
-LaTeX Font Info:    ... okay on input line 74.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 74.
-LaTeX Font Info:    ... okay on input line 74.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 74.
-LaTeX Font Info:    ... okay on input line 74.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 74.
-LaTeX Font Info:    ... okay on input line 74.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 74.
-LaTeX Font Info:    ... okay on input line 74.
-Package hyperref Info: Link coloring OFF on input line 74.
- (/usr/share/texmf-texlive/tex/latex/hyperref/nameref.sty
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 93.
+LaTeX Font Info:    ... okay on input line 93.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 93.
+LaTeX Font Info:    ... okay on input line 93.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 93.
+LaTeX Font Info:    ... okay on input line 93.
+LaTeX Font Info:    Checking defaults for IL2/cmr/m/n on input line 93.
+LaTeX Font Info:    ... okay on input line 93.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 93.
+LaTeX Font Info:    ... okay on input line 93.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 93.
+LaTeX Font Info:    ... okay on input line 93.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 93.
+LaTeX Font Info:    ... okay on input line 93.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 93.
+LaTeX Font Info:    ... okay on input line 93.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 93.
+LaTeX Font Info:    ... okay on input line 93.
+Package hyperref Info: Link coloring OFF on input line 93.
+
+(/usr/share/texmf-texlive/tex/latex/hyperref/nameref.sty
 Package: nameref 2007/05/29 v2.31 Cross-referencing by name of section
 
 (/usr/share/texmf-texlive/tex/latex/oberdiek/refcount.sty
@@ -441,8 +441,8 @@ Package: refcount 2008/08/11 v3.1 Data extraction from references (HO)
 )
 \c@section@level=\count95
 )
-LaTeX Info: Redefining \ref on input line 74.
-LaTeX Info: Redefining \pageref on input line 74.
+LaTeX Info: Redefining \ref on input line 93.
+LaTeX Info: Redefining \pageref on input line 93.
  (./prace.out)
 (./prace.out)
 \@outlinefile=\write3
@@ -452,22 +452,22 @@ LaTeX Info: Redefining \pageref on input line 74.
 File: logo.eps Graphic file (type eps)
  <logo.eps>
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <14.4> on input line 119.
+(Font)              <14.4> on input line 138.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <7> on input line 119.
+(Font)              <7> on input line 138.
  [1
 
 ] [2
 
 ]
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 162.
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 181.
 
 
 (/usr/share/texmf-texlive/tex/latex/base/omscmr.fd
 File: omscmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 162.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 181.
  [3] [4] (./prace.toc
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <12> on input line 3.
@@ -483,68 +483,48 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 [1
 
 
-]
-\openout2 = `uvod.aux'.
+] [2
 
- (./uvod.tex [2
-
-
-]) [3]
-\openout2 = `kap1.aux'.
-
- (./kap1.tex
+] [3]
 Kapitola 1.
 [4
 
-
-
 ]
-Overfull \hbox (248.93303pt too wide) in paragraph at lines 25--26
+Overfull \hbox (248.93303pt too wide) in paragraph at lines 312--313
 []\IL2/cmr/m/n/12 Výpoèetní vý-kon po-èí-ta-èù stá-le ros-te rych-los-tí Mo-o-r
 e-o-va zá-ko-na (ftp://download.intel.com/research/silicon/moorespaper.pdf),
  []
 
 
-Overfull \hbox (0.30853pt too wide) in paragraph at lines 30--31
+Overfull \hbox (0.30853pt too wide) in paragraph at lines 317--318
 \IL2/cmr/m/n/12 CAT, ne-bo-li computer-aided translati-on, èi computer-assisted
  translati-on je zkrat-
  []
 
-[5]) [6]
-\openout2 = `kap2.aux'.
-
- (./kap2.tex
+[5] [6]
 Kapitola 2.
-
-Overfull \hbox (2.3238pt too wide) in paragraph at lines 3--4
-\IL2/cmr/m/n/12 Moses je sta-tis-tic-ký pøe-kla-do-vý sys-tém za-lo-¾e-ný na pø
-e-kla-du frá-zí (an-g-lic-ky PBMT
- []
-
 File: pictures/phrase-based.eps Graphic file (type eps)
-<pictures/phrase-based.eps> [7
+<pictures/phrase-based.eps>
+File: pictures/lattice.eps Graphic file (type eps)
+ <pictures/lattice.eps>
+File: pictures/lattice-selected.eps Graphic file (type eps)
 
+<pictures/lattice-selected.eps>
+File: pictures/non-zero-start.eps Graphic file (type eps)
+ <pictures/non-zero-start.eps> [7
 
-
-]) [8]
-\openout2 = `kap3.aux'.
-
- (./kap3.tex
+] [8] [9]
 Kapitola 3.
-) [9
-
-
+[10
 
 ]
-\openout2 = `kap4.aux'.
+Kapitola 4.
+[11
 
- (./kap4.tex)
+]
 \openout2 = `zaver.aux'.
 
- (./zaver.tex) [10
-
-
-
+ (./zaver.tex) [12
 
 
 ]
@@ -554,26 +534,29 @@ Kapitola 3.
 
 LaTeX Warning: Empty `thebibliography' environment on input line 16.
 
-) [11
+) [13
 
 
-
-] [12
-
-
-] [13
 
 ] [14
 
-] (./prace.aux (./uvod.aux) (./kap1.aux) (./kap2.aux)
-(./kap3.aux) (./kap4.aux) (./zaver.aux) (./literatura.aux)) ) 
-Here is how much of TeX's memory you used:
- 5572 strings out of 494938
- 74214 string characters out of 1181145
- 145666 words of memory out of 3000000
- 8766 multiletter control sequences out of 15000+50000
- 14388 words of font info for 37 fonts, out of 3000000 for 9000
- 24 hyphenation exceptions out of 8191
- 38i,6n,38p,1469b,345s stack positions out of 5000i,500n,10000p,200000b,50000s
 
-Output written on prace.dvi (18 pages, 46980 bytes).
+] [15
+
+] [16
+
+] (./prace.bbl) [17
+
+
+] (./prace.aux (./zaver.aux)
+(./literatura.aux)) ) 
+Here is how much of TeX's memory you used:
+ 5560 strings out of 494938
+ 74243 string characters out of 1181145
+ 146713 words of memory out of 3000000
+ 8782 multiletter control sequences out of 15000+50000
+ 14988 words of font info for 38 fonts, out of 3000000 for 9000
+ 24 hyphenation exceptions out of 8191
+ 38i,6n,36p,1665b,345s stack positions out of 5000i,500n,10000p,200000b,50000s
+
+Output written on prace.dvi (21 pages, 59656 bytes).

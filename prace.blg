@@ -1,0 +1,47 @@
+This is BibTeX, Version 0.99c (TeX Live 2009/Debian)
+The top-level auxiliary file: prace.aux
+A level-1 auxiliary file: zaver.aux
+A level-1 auxiliary file: literatura.aux
+The style file: alpha.bst
+Database file #1: prace.bib
+You've used 1 entry,
+            2543 wiz_defined-function locations,
+            564 strings with 4607 characters,
+and the built_in function-call counts, 379 in all, are:
+= -- 32
+> -- 19
+< -- 0
++ -- 6
+- -- 6
+* -- 22
+:= -- 70
+add.period$ -- 3
+call.type$ -- 1
+change.case$ -- 6
+chr.to.int$ -- 1
+cite$ -- 1
+duplicate$ -- 17
+empty$ -- 32
+format.name$ -- 7
+if$ -- 76
+int.to.chr$ -- 1
+int.to.str$ -- 0
+missing$ -- 1
+newline$ -- 8
+num.names$ -- 3
+pop$ -- 9
+preamble$ -- 1
+purify$ -- 7
+quote$ -- 0
+skip$ -- 14
+stack$ -- 0
+substring$ -- 7
+swap$ -- 2
+text.length$ -- 0
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 8
+warning$ -- 0
+while$ -- 3
+width$ -- 2
+write$ -- 14
