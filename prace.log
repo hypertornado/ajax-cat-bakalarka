@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=cslatex 2011.4.17)  14 MAY 2011 15:54
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=cslatex 2011.4.17)  17 MAY 2011 21:27
 entering extended mode
  %&-line parsing enabled.
 **prace.tex
@@ -511,16 +511,84 @@ File: pictures/non-zero-start.eps Graphic file (type eps)
 
 ] [8] [9]
 Kapitola 3.
+
+Overfull \hbox (0.69186pt too wide) in paragraph at lines 390--392
+[]\IL2/cmr/m/n/12 Nejprve je po-tøe-ba na-in-sta-lo-vat pøe-kla-do-vý sys-tém M
+oses. Na ofi-ci-ál-ních strán-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 393--394
+
+ []
+
+LaTeX Font Info:    Try loading font information for IL2+cmtt on input line 396
+.
+(/usr/share/texmf-texlive/tex/latex/cslatex/il2cmtt.fd
+File: il2cmtt.fd 1997/08/20 CSLaTeX font definitions
+)
+Underfull \hbox (badness 10000) in paragraph at lines 396--397
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 399--400
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 408--409
+
+ []
+
 [10
 
 ]
+Underfull \hbox (badness 10000) in paragraph at lines 414--415
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 416--417
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 423--424
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 425--426
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 427--428
+
+ []
+
+LaTeX Font Info:    Try loading font information for OMS+cmtt on input line 429
+.
+LaTeX Font Info:    No file OMScmtt.fd. on input line 429.
+
+LaTeX Font Warning: Font shape `OMS/cmtt/m/n' undefined
+(Font)              using `OMS/cmsy/m/n' instead
+(Font)              for symbol `textbackslash' on input line 429.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 429--430
+
+ []
+
+[11] [12]
 Kapitola 4.
-[11
+[13
 
 ]
 \openout2 = `zaver.aux'.
 
- (./zaver.tex) [12
+ (./zaver.tex) [14
 
 
 ]
@@ -530,29 +598,42 @@ Kapitola 4.
 
 LaTeX Warning: Empty `thebibliography' environment on input line 16.
 
-) [13
+) [15
 
 
-
-] [14
-
-
-] [15
 
 ] [16
 
-] (./prace.bbl) [17
+
+] [17
+
+]
+Underfull \hbox (badness 10000) in paragraph at lines 480--481
+
+ []
 
 
-] (./prace.aux (./zaver.aux)
-(./literatura.aux)) ) 
+Underfull \hbox (badness 10000) in paragraph at lines 486--487
+
+ []
+
+[18
+
+] (./prace.bbl) [19
+
+
+] (./prace.aux (./zaver.aux) (./literatura.aux))
+
+LaTeX Font Warning: Some font shapes were not available, defaults substituted.
+
+ ) 
 Here is how much of TeX's memory you used:
- 5561 strings out of 494938
- 74258 string characters out of 1181145
- 147374 words of memory out of 3000000
- 8782 multiletter control sequences out of 15000+50000
- 15538 words of font info for 39 fonts, out of 3000000 for 9000
+ 5591 strings out of 494938
+ 74939 string characters out of 1181145
+ 147180 words of memory out of 3000000
+ 8806 multiletter control sequences out of 15000+50000
+ 15835 words of font info for 40 fonts, out of 3000000 for 9000
  24 hyphenation exceptions out of 8191
  38i,8n,36p,1665b,345s stack positions out of 5000i,500n,10000p,200000b,50000s
 
-Output written on prace.dvi (21 pages, 62196 bytes).
+Output written on prace.dvi (23 pages, 77116 bytes).

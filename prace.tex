@@ -378,24 +378,65 @@ Přireálném překladu se často může stát, že překladatel použije překl
 
 \chapter{Implementace serverové části}
 
+\section{Instalace}
+
+\subsection{Virtuální systém}
+
+Nejjednoduší variantou, jak na svém počítači zprovoznit AJAX-CAT je pomocí virtuálního stroje. Tento virtuální stroj s operačním systémem Ubuntu 10.04 se nachází na přiloženém CD. Pro jeho spuštění je potřeba mít nainstalovaný program Virtualbox\footnote{http://www.virtualbox.org/}, který je dostupný pro platformy Linux, Windows, Mac OSX i další. Pro spuštění virtuálního systému s AJAX-CAT je tedy nutné pomocí Virtualboxu spustit archiv ajax-cat.ova v adresáři virtualni\_stroj na přiloženém CD. Přihlašovací heslo do virtuálního systému je "ajax-cat".
+
+\subsection{Běžná instalace}
+Serverová část AJAX-CAT používá nástroje a knihovny, které jsou silně provázané s Linuxovým světem. Instalace na jiných platformách může být poměrně obtížná.
+
+Nejprve je potřeba nainstalovat překladový systém Moses. Na oficiálních stránkách Mosese je poměrně obsáhlý návod k zprovoznění
+\footnote{http://www.statmt.org/moses\_steps.html}. S balíčkovacím systémem aptitude je jednodušší instalovat Mosese pomocí debian balíku z repozitáře Ubuntu NLP\footnote{http://cl.naist.jp/$\sim$eric-n/ubuntu-nlp/}. Dále je potřeba získat nějaký překladový a jazykový model. Součástí instalačních instrukcí pro Mosese je i návod, jak vytvořit tyto modely. Další možností je si nějaké jednoduché hotové modely stáhnout\footnote{http://www.statmt.org/moses/?n=Moses.SampleData}. Pro spuštění AJAX-CAT je potřeba mít pro Mosese vytvořený konfigurační soubor moses.ini, který obsahuje definice a parametry překladového a jazykového modelu.
+
+Dále je potřeba nainstalovat knihovnu libmicrohttpd\footnote{http://www.gnu.org/software/libmicrohttpd/}. Nejprve je potřeba stáhnout svn repozitář. Pomocí příkazů v BASH shellu to jde například takto: \\
+
+
+{\tt svn checkout https://gnunet.org/svn/libmicrohttpd/ } \\
+
+
+Instalovat samotnou knihovnu pak lze pomocí posloupnosti příkazů: \\
+
+
+{\tt autoreconf -fi
+
+./configure
+
+make
+
+make install} \\
+
+Podrobné informace o instalaci jsou v textovém souboru INSTALL.
+
+Nyní by mělo být vše připraveno ke kompilaci samotného AJAX-CAT serveru. Z přiloženého CD stačí zkopírovat obsah adresáře ajax-cat-server na lokální disk. Před instalací je potřeba otevřít soubor Makefile a zadat do proměnné MICROHTTPD\_PATH cestu ke knihovně libmicrohttpd. Pokud byla tato knihovna nainstalována standardně, nemělo by být nutné něco měnit. Server se pak zkompiluje příkazem make. Po kompilaci by měl vzniknout spustitelný soubor ajax-cat-server. Ten si své parametry bere z konfiguračního souboru config.ini. Vzorem toho, jak by měl tento soubor vypadat je soubor server.ini.example. Ten se nachází v Příloze 1 této práce. Parametr [moses-path] určuje cestu k programu Moses. Parametr [translation-pair] definuje informace o každém překladovém páru. Na prvním řádku se uvádí název překladového páru, na dalším řádku je pak cesta ke konfiguračnímu souboru pro Mosese pro tento pár. Sekcí může být víc, AJAX-CAT server dokáže spustit pro více překladových párů více instancí Mosese. Dobrou konvencí je tyto soubory pojmenovávat podle normy ISO 639-1\footnote{http://www.loc.gov/standards/iso639-2/php/English\_list.php}. Například překladový pár pro překlad z češtiny do angličtiny je dobré pojmenovat "cs-en".
+
+Po nastavení cest v konfiguračním souboru se již může spustit samotný server. Stačí spustit program ajax-cat-server. V terminálu by se měly objevit informace o startování serveru. Server je nastartován v okamžiku, kdy se pro všechny překladové páry "x-y" v terminálu objeví zpráva "Thread x-y ready". Potom lze serveru posílat HTTP GET zprávy na port 8888. Funkčnost serveru lze otestovat po otevření prohlížeče a zadání adresy: \\
+
+{\tt http://localhost:8888/simple?pair=x-y\&q=kleines\%20haus} \\
+
+Server by měl vrátit řetězec s překladem věty "das ist ein kleines haus" pomocí překladového páru "x-y". Server se z terminálu ukončí stisknutím klávesy Enter.
+
 \section{Rozšíření Mosese}
+%\parcite{koehn:haddow:2009}
 
-\subsection{Jak funguje Moses}
-Program Moses můžeme spustit v příkazové řádce typicky způsobem.
+Moses se z příkazové řádky spouští typicky tímto způsobem: \\
 
+{\tt echo "das ist ein kleines haus" | moses -f moses.ini } \\
 
-\$ echo "das ist ein kleines haus" | moses -f moses.ini
+Jedním z nutných rozšíření Mosese bylo implementovat rozšíření, které by Mosesovi umožnilo pokračovat v překladu od částečně přeložené věty. Toto rozšíření se aktivuje pomocí přepínače {\tt -continue-partial-translation}\footnote{http://www.statmt.org/moses/?n=Moses.AdvancedFeatures\#ntoc25}, nebo zkráceně {\tt -cpt}. Pokud je tento přepínač zapnut, očekává Moses speciální druh vstupu, který je pomocí sekvence "{\tt |||}" rozdělen na tři části. Příkladem použití může být následující příkaz: \\
 
+{\tt echo "that house ||| 10001 ||| das ist ein kleines haus" \textbackslash \\ | moses -f moses.ini -continue-partial-translation } \\
 
-Moses dostane text ve zdrojovém jazyce %\parcite{koehn:haddow:2009}
+První částí vstupu je již přeložený řetězec. Druhou částí řetězec nul a jedniček určuje, které části vstupu (typicky slova) jsou pokryta. V tomto příkladě to znamená, že z překládáné věty "das ist ein kleines haus" je překladem "that house" pokryto první slovo "das" a poslední slovo "haus". S touto informací pak Moses dokáže pracovat a generovat nápovědy jak pokračovat v překladu.
 
+\section{Implementační detaily}
+Celá serverová část AJAX-CAT je vlastně tenkou vrstvou napsanou v jazyce C/C++ propojující překladový systém Moses s HTTP serverem libmicrohttpd.
 
+\subsection{Průběh}
+Po spuštění začne server přijímat HTTP požadavky na portu 8888.
 
-
-
-
-
-\chapter{Implementace serverové části}
+\chapter{Implementace klientské části}
 
 Na přiloženém CD je  
 
@@ -431,6 +472,25 @@ Celý překladový systém lze spustit...
 %%% diagramy apod.). Každá příloha musí být alespoň jednou odkazována z vlastního
 %%% textu práce. Přílohy se číslují.
 \chapwithtoc{Přílohy}
+
+\section{server.ini.example}
+{\tt
+~~~[moses-path]
+
+path/to/moses \\
+
+[translation-pair]
+
+pair-name
+
+path/to/moses.ini \\
+
+[translation-pair]
+
+another-pair-name
+
+path/to/another/moses.ini
+}
 
 \openright
 

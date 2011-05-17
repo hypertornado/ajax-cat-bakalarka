@@ -1,0 +1,79 @@
+%%%%%%%%%%%%%%%%%%%
+% LaTeX environment for displaying pseudocode.  Start each line with \progline, and tab using \>.
+% To label the number for a future \ref, use \lprogline. Unnumbered lines use \nprogline.
+% \comment is a full-line comment, while \scomment appears on the same same-line as code.
+% \comment does not substitute for \progline but should be used with it.
+%
+% Jason Eisner - March 1997 - revised November 1999
+%%%%%%%%%%%%%%%%%%%
+
+% !!! should set things up so that program names are referred to by labels (just use progname)
+% !!! set up to use hypertex
+% !!! put entries in index (and in table of contents, like algorithms.sty?)
+% !!! allow pcomment to break across lines (preserving indentation)
+% !!! should fix up rcomment so that it can break across lines ... although it's probably
+%     hard to do this REALLY WELL, i.e., comment box is right-aligned and optimizes constraint hierarchy
+%       wider than 2 inches >> starts on same line as code >> as short as possible >> as narrow as possible
+%     (notice that ``as narrow as possible'' encourages even splitting of lines)
+%     (actually, this hierarchy might not be quite right ... we could do narrower than 2 inches if it all stayed on the same line as code (very short comment!))
+%
+% !!! automatically boldface keywords? - as listings.sty does
+% 
+% A lot of this may already be handled by algorithmic.sty or algorithm.sty, according to
+% the documentation ftp://ftp.rge.com/pub/tex/macros/latex/contrib/supported/listings/listings.dvi
+% for the listings.sty package (which prettyprints source code, and whose documentation lists some other similar packages too)
+
+
+\newcounter{progline}
+\newcounter{progname}    % a dummy counter, whose value prints as the name of the function it was set in
+
+\newenvironment{prog}{\begin{@prog}{\mbox{\bf ??}}}{\end{@prog}}  % unnamed program
+\newenvironment{namedprog}[2]{\begin{@prog}{#1}\\ \funcall{#1}{#2}:}{\end{@prog}}
+\newenvironment{@prog}[1]{%
+       \vspace{-\baselineskip}
+       \setcounter{progline}{0}
+       \def\theprogname{\funcname{#1}}  % so that (within this environment) the stored label for counter progname will ignore the counter value and instead use this text - namely, the function name
+       \begin{small}%
+       \begin{tabbing}%
+       \hspace{\parindent}\=1234\=123\=123\=123\=123\=123\=123\=123\=123\=123\=\+\kill}%
+    {\end{tabbing} \end{small}}
+
+\newcommand{\funcname}[1]{\mbox{\sc #1}}
+\newcommand{\funcall}[2]{\mbox{\funcname{#1}(#2)}}    % a formal function call (name and args) in running text; args may be omitted if we're just naming the function
+
+\newcommand{\progline}{\\ \stepcounter{progline}{\tiny \theprogline .}\>}   % numbered line
+\newcommand{\lprogline}[1]{\\ \refstepcounter{progline}\label{#1}\refstepcounter{progname}\label{progname@#1}{\tiny \theprogline .}\>}  % numbered, labeled line
+\newcommand{\nprogline}{\\ \>}              % unnumbered line
+
+\newcommand{\progref}[1]{line~\ref{#1}}
+\newcommand{\Progref}[1]{Line~\ref{#1}}
+\newcommand{\progrefrange}[2]{lines~\ref{#1}--\ref{#2}}
+\newcommand{\Progrefrange}[2]{Lines~\ref{#1}--\ref{#2}}
+\newcommand{\namedprogref}[1]{\progref{#1} of \ref{progname@#1} (p.~\pageref{#1})}
+\newcommand{\Namedprogref}[1]{\Progref{#1} of \ref{progname@#1} (p.~\pageref{#1})}
+\newcommand{\namedprogrefrange}[2]{\progrefrange{#1}{#2} of \ref{progname@#1} (p.~\pageref{#1})}
+\newcommand{\Namedprogrefrange}[2]{\Progrefrange{#1}{#2} of \ref{progname@#1} (p.~\pageref{#1})}
+
+\newcommand{\pcomment}[1]{{\scriptsize\sl (* #1 *)}}     % program comment as its own line
+\newcommand{\rcomment}[1]{\`\pcomment{#1}}                % comment on same line as code, flush-right
+\newcommand{\scomment}[1]{\hspace{0.25in}\pcomment{#1}}   % comment on same line as code
+
+\newcommand{\semicolon}{\mbox{\ \ ;\ \ }}                 % semicolon separating two statements on same line
+\newcommand{\bind}{\;\stackrel{\rm def}{=}\;}                 % alternative to := when the left hand side is a constant
+
+\newcommand{\keyword}[1]{{\bf #1}}
+\newcommand{\foreach}{\keyword{foreach}}
+\newcommand{\progif}{\keyword{if}}
+
+
+% % Note about using boxes as variables:
+% \newsavebox{\bing}
+% \newcommand{\setbing}[1]{\savebox{\bing}{#1}}
+% \newcommand{\usebing}{\usebox{\bing}}
+% \setbing{BING}
+% 1 \usebing {\setbing{LOCAL} 2 \usebing} 3 \usebing    % boxes are lexically scoped, like \def commands
+% \begin{tabbing}
+% 4 \usebing \\ 
+% 5 \usebing \setbing{DIFFERENT} 6 \usebing \\   % a line in tabbing environment is a scope
+% 7 \usebing
+% \end{tabbing}
