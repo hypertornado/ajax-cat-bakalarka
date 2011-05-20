@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=cslatex 2011.4.17)  17 MAY 2011 21:27
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=cslatex 2011.4.17)  20 MAY 2011 15:50
 entering extended mode
  %&-line parsing enabled.
 **prace.tex
@@ -581,14 +581,96 @@ Underfull \hbox (badness 10000) in paragraph at lines 429--430
 
  []
 
-[11] [12]
+[11]
+Underfull \hbox (badness 10000) in paragraph at lines 444--445
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 446--447
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 451--452
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 453--454
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 455--456
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 475--476
+
+ []
+
+[12]
+Underfull \hbox (badness 10000) in paragraph at lines 477--478
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 479--480
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 484--485
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 486--487
+
+ []
+
+
+Overfull \hbox (0.76547pt too wide) in paragraph at lines 489--490
+\IL2/cmr/m/n/12 Slo¾ka se ser-ve-ro-vou èás-tí ob-sa-hu-je sou-bo-ry Ma-ke-fi-l
+e, ser-ver.ini, ser-ver.ini.example
+ []
+
+[13]
+Underfull \hbox (badness 10000) in paragraph at lines 500--501
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 510--511
+
+ []
+
+[14]
+Underfull \hbox (badness 10000) in paragraph at lines 521--522
+
+ []
+
+
+Overfull \hbox (49.66008pt too wide) in paragraph at lines 523--524
+[]\IL2/cmtt/m/n/12 84 ||| it is small ||| d: 0 lm: -20.8498 w: -3 tm: -3.21888 
+||| -24.0687
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 523--524
+
+ []
+
+[15] [16]
 Kapitola 4.
-[13
+[17
 
 ]
 \openout2 = `zaver.aux'.
 
- (./zaver.tex) [14
+ (./zaver.tex) [18
 
 
 ]
@@ -598,28 +680,28 @@ Kapitola 4.
 
 LaTeX Warning: Empty `thebibliography' environment on input line 16.
 
-) [15
+) [19
 
 
 
-] [16
+] [20
 
 
-] [17
+] [21
 
 ]
-Underfull \hbox (badness 10000) in paragraph at lines 480--481
+Underfull \hbox (badness 10000) in paragraph at lines 593--594
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 486--487
+Underfull \hbox (badness 10000) in paragraph at lines 599--600
 
  []
 
-[18
+[22
 
-] (./prace.bbl) [19
+] (./prace.bbl) [23
 
 
 ] (./prace.aux (./zaver.aux) (./literatura.aux))
@@ -628,12 +710,12 @@ LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
  ) 
 Here is how much of TeX's memory you used:
- 5591 strings out of 494938
- 74939 string characters out of 1181145
- 147180 words of memory out of 3000000
- 8806 multiletter control sequences out of 15000+50000
+ 5595 strings out of 494938
+ 75015 string characters out of 1181145
+ 147495 words of memory out of 3000000
+ 8810 multiletter control sequences out of 15000+50000
  15835 words of font info for 40 fonts, out of 3000000 for 9000
  24 hyphenation exceptions out of 8191
  38i,8n,36p,1665b,345s stack positions out of 5000i,500n,10000p,200000b,50000s
 
-Output written on prace.dvi (23 pages, 77116 bytes).
+Output written on prace.dvi (27 pages, 96236 bytes).

@@ -17,13 +17,28 @@
 \contentsline {subsection}{\numberline {3.1.2}B\IeC {\v e}\IeC {\v z}n\IeC {\'a} instalace}{10}{subsection.3.1.2}
 \contentsline {section}{\numberline {3.2}Roz\IeC {\v s}\IeC {\'\i }\IeC {\v r}en\IeC {\'\i } Mosese}{11}{section.3.2}
 \contentsline {section}{\numberline {3.3}Implementa\IeC {\v c}n\IeC {\'\i } detaily}{12}{section.3.3}
-\contentsline {subsection}{\numberline {3.3.1}Pr\IeC {\r u}b\IeC {\v e}h}{12}{subsection.3.3.1}
-\contentsline {chapter}{\numberline {4}Implementace klientsk\IeC {\'e} \IeC {\v c}\IeC {\'a}sti}{13}{chapter.4}
-\contentsline {section}{\numberline {4.1}Instalace}{13}{section.4.1}
-\contentsline {section}{\numberline {4.2}Virtu\IeC {\'a}ln\IeC {\'\i } syst\IeC {\'e}m}{13}{section.4.2}
-\contentsline {chapter}{Z\IeC {\'a}v\IeC {\v e}r}{14}{chapter*.3}
-\contentsline {chapter}{Seznam pou\IeC {\v z}it\IeC {\'e} literatury}{15}{chapter*.4}
-\contentsline {chapter}{Seznam tabulek}{16}{chapter*.5}
-\contentsline {chapter}{Seznam pou\IeC {\v z}it\IeC {\'y}ch zkratek}{17}{chapter*.6}
-\contentsline {chapter}{P\IeC {\v r}\IeC {\'\i }lohy}{18}{chapter*.7}
-\contentsline {section}{\numberline {4.3}server.ini.example}{18}{section.4.3}
+\contentsline {subsection}{\numberline {3.3.1}Typy dotaz\IeC {\r u}}{12}{subsection.3.3.1}
+\contentsline {subsubsection}{Simple}{12}{section*.3}
+\contentsline {subsubsection}{Table}{12}{section*.4}
+\contentsline {subsubsection}{Suggestion}{13}{section*.5}
+\contentsline {subsubsection}{Raw}{13}{section*.6}
+\contentsline {subsection}{\numberline {3.3.2}P\IeC {\v r}ehled soubor\IeC {\r u}}{13}{subsection.3.3.2}
+\contentsline {subsection}{\numberline {3.3.3}Funkce a t\IeC {\v r}\IeC {\'\i }dy}{13}{subsection.3.3.3}
+\contentsline {subsubsection}{Funkce main}{13}{section*.7}
+\contentsline {subsubsection}{Funkce answer\_to\_connection}{13}{section*.8}
+\contentsline {subsubsection}{T\IeC {\v r}\IeC {\'\i }da MosesPair}{14}{section*.9}
+\contentsline {subsubsection}{T\IeC {\v r}\IeC {\'\i }da Request}{15}{section*.10}
+\contentsline {subsubsection}{T\IeC {\v r}\IeC {\'\i }da RawRequest}{15}{section*.11}
+\contentsline {subsubsection}{T\IeC {\v r}\IeC {\'\i }da SimpleRequest}{15}{section*.12}
+\contentsline {subsubsection}{T\IeC {\v r}\IeC {\'\i }da TableRequest}{15}{section*.13}
+\contentsline {subsubsection}{T\IeC {\v r}\IeC {\'\i }da SuggestionRequest}{15}{section*.14}
+\contentsline {subsubsection}{Ostatn\IeC {\'\i } funkce}{16}{section*.15}
+\contentsline {chapter}{\numberline {4}Implementace klientsk\IeC {\'e} \IeC {\v c}\IeC {\'a}sti}{17}{chapter.4}
+\contentsline {section}{\numberline {4.1}Instalace}{17}{section.4.1}
+\contentsline {section}{\numberline {4.2}blbosti}{17}{section.4.2}
+\contentsline {chapter}{Z\IeC {\'a}v\IeC {\v e}r}{18}{chapter*.16}
+\contentsline {chapter}{Seznam pou\IeC {\v z}it\IeC {\'e} literatury}{19}{chapter*.17}
+\contentsline {chapter}{Seznam tabulek}{20}{chapter*.18}
+\contentsline {chapter}{Seznam pou\IeC {\v z}it\IeC {\'y}ch zkratek}{21}{chapter*.19}
+\contentsline {chapter}{P\IeC {\v r}\IeC {\'\i }lohy}{22}{chapter*.20}
+\contentsline {section}{\numberline {4.3}server.ini.example}{22}{section.4.3}

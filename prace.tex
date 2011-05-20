@@ -431,16 +431,132 @@ Jedním z nutných rozšíření Mosese bylo implementovat rozšíření, které
 První částí vstupu je již přeložený řetězec. Druhou částí řetězec nul a jedniček určuje, které části vstupu (typicky slova) jsou pokryta. V tomto příkladě to znamená, že z překládáné věty "das ist ein kleines haus" je překladem "that house" pokryto první slovo "das" a poslední slovo "haus". S touto informací pak Moses dokáže pracovat a generovat nápovědy jak pokračovat v překladu.
 
 \section{Implementační detaily}
+
+!!!!DEFINOVAT CO ZNAMENA SLOVO V MOSESOVI!!!!
+
+
 Celá serverová část AJAX-CAT je vlastně tenkou vrstvou napsanou v jazyce C/C++ propojující překladový systém Moses s HTTP serverem libmicrohttpd.
 
-\subsection{Průběh}
-Po spuštění začne server přijímat HTTP požadavky na portu 8888.
+\subsection{Typy dotazů}
+Po spuštění začne server přijímat HTTP požadavky na portu 8888. Požadavky jsou 4 druhů.
+
+\subsubsection{Simple}
+Pomocí požadavku simple lze získat jako odpověď nejlepší překlad věty v jednoduché textové formě. Požadavek má tvar: \\
+
+{\tt http://localhost:8888/simple?pair=de-en\&q=das+ist } \\
+
+Parametr {\tt pair } určuje jméno překladového páru, který má server použít. Parametr {\tt q } je zdrojový text zakódovaný do standartního HTTP kódování.
+
+\subsubsection{Table}
+Požadavek table vrací překladovou tabulku pro zadaný text. Požadavek má tvar: \\
+
+{\tt http://localhost:8888/table?pair=de-en\&q=das+ist } \\
+
+Parametry mají stejný význam jako u předchozího požadavku. Server vrací překladovou tabulku ve standartním javascriptovém JSON formátu. Část {\tt source } je polem slov ve zdrojovém textu. Část {\tt target } je pole řádků tabulky. Každý řádek obsahuje frázi. Každá fráze má kromě textu také část určující kolik slov ve zdrojovém textu pokrývá. Příklad odpovědi na výše uvedený požadavek: \\
+
+{\tt \{"source":["das","ist"],
+"target":[ 
+
+[\{"t":"this is ","s":"2"\}],
+ 
+[\{"t":"it is ","s":"2"\}],
+ 
+[\{"t":"the ","s":"1"\},
+
+\{"t":"is ","s":"1"\}]
+
+]\} 
+
+}
+
+Překládá se tedy "das ist" v překladovém páru "de-en". Odpověď říká, že nejlepším nalezeným překladem je přeložení celého "das ist" frází "this is", druhou variantou je překlad "it is" a v posledním řádku je nabídnut překlad slova "das" jako "the" a překlad slova "ist" jako "is".
+
+\subsubsection{Suggestion}
+Důležitým požadavkem je suggestion. Server se lze tímto dotazem zeptat na pokračování při překladu. Kromě parametrů shodných s předchozími požadavky má navíc parametry {\tt translated} a {\tt covered}: \\
+
+{\tt http://localhost:8888/suggestion?pair=de-en \\ \&translated=a+small\&covered=00110\&q=das+ist+ein+kleines+haus } \\
+
+Parametr {\tt translated} je text již přeložené části. Parametr {\tt covered} je vektor jedniček a nul označující již přeložené části ve zdrojovém textu. Odpověď serveru je opět ve formátu JSON a v poli {\tt suggestions} znázorňuje nejpravděpodobnější možnosti pokračování překladu. Těchto nápověd je maximálně 5 a každá má délku maximálně 3 slova. Příkladem nápovědy na výše uvedený dotaz je: \\
+
+{\tt \{"suggestions":["is the house","the house is","is this house"]\} }
+
+\subsubsection{Raw}
+Požadavek raw vrací nezpracovaný výstup z Mosese a je vhodný pro ladící účely. Formát je podobný jako v předchozích případech: \\
+
+{\tt http://localhost:8888/raw?pair=de-en\&q=das+ist } \\
+
+\subsection{Přehled souborů}
+Složka se serverovou částí obsahuje soubory Makefile, server.ini, server.ini.example a pokud je projekt zkompilovaný, tak i spustitelný soubor ajax-cat-server. Makefile je soubor s pokyny pro sestavovací program make. Soubor server.ini je inicializační soubor s informacemi o umístění Mosese a umístěním a jmény jednotlivých překladových párů. Ukázkou, jak by měl konfigurační soubor vypadat je soubor server.ini.example. Po prvním spuštění programu vznikne tmp, kde se nacházejí pojmenované roury, které slouží ke komunikaci s Mosesem. Kód serveru se nachází v souboru server.cpp ve složce src.
+
+\subsection{Funkce a třídy}
+
+\subsubsection{Funkce main}
+Spouští celý server. Z inicializačního souboru zjistí, kde se nachází Moses a jaké překladové páry má spustit. Funkcí MHD\_start\_daemon spustí libmicrohttpd server na portu 8888 a řekne mu, aby požadavky zpracovával funkcí answer\_to\_connection. Dále spouští kontrolní vlákno s funkcí control\_thread, která jednou za čas kontroluje, jestli jsou všechny procesy s Mosesem stále aktivní.
+
+\subsubsection{Funkce answer\_to\_connection}
+Tato funkce je volána při každém dotazu na server. Načte všechny přípustné parametry, který dotaz může mít a rozhodne, který jazykový pár bude požadovat a jaký tvar odpovědi je žádán. V případě správného dotazu vrátí funkce kód 200 správné HTTP odpovědi a zařadí odpověď do fronty odpovědí. Tuto frontu obsluhuje knihovna libmicrohttpd, která data vrací správnému tazateli.
+
+\subsubsection{Třída MosesPair}
+Tato třída reprezentuje jeden jazykový pár. V konstruktoru dostane své jméno a cestu ke konfiguračnímu souboru pro Mosese. Tento konfigurační pár určuje jeden jazykový pár. Dále konstruktor vytvoří pojmenovanou rouru, kterou bude získávat výstup z Mosese a spustí Mosese s příslušným konfiguračním souborem: \\
+
+{\tt moses -f moses.ini
+
+-n-best-list - 100 distinct
+
+-include-alignment-in-n-best true
+
+-continue-partial-translation true
+
+> tmp/en-de\_out.fifo 2>/dev/null } \\
+
+Parametry říkají Mosesovi, aby na výstup vygeneroval 100 různých překladů vstupního textu. Konstruktor třídy pak svou instanci zařadí do mapy {\tt server}, kterou používá funkce answer\_to\_connection k rozlišení toho, který jazykový pár má použít k získání odpovědi. Pak se ještě sám zařadí do seznamu {\tt serversOrder}, který využívá následně spuštěné vlákno k určení, který jazykový pár ho spustil. Nakonec se tedy zavolá vlákno spouštějící statickou metodu {\tt reader}.
+
+Součástí třídy je fronta požadavků typu Request. Instance třídy MosesPair přijímají požadavky od funkce answer\_to\_connection pomocí metody get\_translation. Ta vezme požadavek a zařadí ho do své fronty. Dále procesu s Mosesem pošle dva požadavky na překlad. Prvním požadavkem je skutečná věta, kterou chce přeložit, druhým následujícím požadavkem je "nesmyslný řetězec". Výstup z Mosese je proud očíslovaných řádků a tento "nesmyslný řetězec" slouží k odlišení konce vstupu, který požadujeme. Aby bylo přidání do fronty i předání dotazů z Mosese bezpečné, je při těchto operacích prováděno zamykání mutexů queue\_mutex a moses\_mutex. Funkce pak vlastní požadavek zamkne a čeká, dokud nebude odemčen vláknem, které čte výstupy z Mosese.
+
+Tímto vláknem je právě vlákno, které spouští konstruktor třídy MosesPair na konci svého běhu. Vlákno je tedy obsluhované statickou metodu {\tt reader}. Tato metoda se nejdříve připojí k pojmenované rouře do které posílá Moses svůj výstup a postupně ji čte. Výstupem je tedy řádek s pořadovým číslem dotazu na Mosese. Vlákno tedy nejprve pomocí třídy Line rozdělí řádek na části a získá toto pořadové číslo. Z pořadového čísla na předchozím řádku dokáže rozlišit situaci, kdy Moses začíná vracet odpověď na další požadavek. Jelikož je při požadavcích na Mosese vkládán i "nesmyslný řetězec", jsou zajímavé pouze odpovědi se sudým pořadovým číslem. Pro každou takovou odpověď vezme metoda jeden požadavek z fronty. Díky tomu, že Moses odpovídá na požadavky lineárně, odpovídá výstup z Mosese požadavku na začátku fronty (prvek, který je ve frontě nejdéle). Tomuto požadavku předává řádky z Mosese. Pak uvolní zámek v požadavku, což umožní, aby metoda get\_translation mohla vrátit výsledek.
+
+\subsubsection{Třída Request}
+Od této třídy dědí všechny ostatní druhy požadavků na server. Semafor {\tt sem} se pomocí metody {\tt lock} zamyká na začátku zpracování požadavku a odemyká se pomocí metody {\tt unlock} na konci zpracování. Každý požadavek má dvě metody - {\tt process\_line} a {\tt get\_result}.
+
+Metoda {\tt process\_line} zpracovává řádek výstupu z Mosese. Ten má typicky tvar: \\
+
+{\tt 84 ||| it is small  ||| d: 0 lm: -20.8498 w: -3 tm: -3.21888 ||| -24.0687 ||| 0-1=0-1 2=2 } \\
+
+Tento řádek reprezentuje jeden z překladů věty Mosesem. Řádek je rozdělen na pět částí rozdělených řetězcem {\tt |||}. V první je číslo požadavku, v druhé je řetězec s překladem, ve čtvrté je skóre překladů vypočtené z parametrů ve třetí části. Poslední část obsahuje informace o zarovnání, tedy o tom, která část výstupního řatězce patří ke které části vstupního řetězce. Metoda {\tt process\_line} si bere parametr třídy {\tt Line}. Tato třída reprezentuje právě jeden řádek výstupu z Mosese a poskytuje metody k získání jednotlivých částí výstupu.
+
+Metoda {\tt get\_result} zpracovává tyto řádky a výsledek vrací jako řetězec, který se vrátí uživateli jako odpověď na požadavek.
+
+\subsubsection{Třída RawRequest}
+Tato třída je potomkem třídy {\tt Request}. Odpovídá požadavku raw a metodou {\tt get\_result} vrací textová data ve stejné formě, jakou získává od Mosese.
+
+\subsubsection{Třída SimpleRequest}
+Tato třída je potomkem třídy {\tt Request}. Odpovídá požadavku simple. Zpracovává pouze první řádek, který od Mosese získá a vrací řetězec s překladem.
+
+\subsubsection{Třída TableRequest}
+TODO: vic rozepsat co delaji funkce.
+
+Tato třída je potomkem třídy {\tt Request}. Odpovídá požadavku table, generuje tedy tabulku překladových možností. Tato tabulka je reprezentovaná třídou {\tt Table}. Má pět řádků a sloupců má stejně jako je slov ve zdrojovém textu. Každý řádek je pomocí informací o zarovnání rozdělen na fráze a každá fráze je přidělena do příslušných sloupců překladové fráze. Může se však stát, že stejná fráze pokrývající stejná slova vstupu (a ležící tedy ve stejných sloupcích tabulky) už v tabulce je. V tom případě se fráze zahodí, stejně jako v případě, že je v daných sloupích tabulka již plná. Jednotlivé fráze reprezentuje třída {\tt Phrase}.
+
+V metodě {\tt get\_result } je pak tabulka převáděna do JSON formátu.
+
+\subsubsection{Třída SuggestionRequest}
+TODO: Ujasnit jak funguje konstruktor, vic rozepsat co delaji funkce.
+
+Tato třída je potomkem třídy {\tt Request}. Odpovídá požadavku suggestion. Při zpracování řádku z Mosese pomocí statické metody {\tt get\_suffix} získá řetězec se třemi prvními slovy překladu, tedy nejbližší nápovědou. Tento řetězec se poté snaží přidat do pole {\tt results} a kontroluje, aby v něm nebyly duplicity a aby obsahovalo maximálně 5 prvků.
+
+\subsubsection{Ostatní funkce}
 
 \chapter{Implementace klientské části}
 
-Na přiloženém CD je  
+Klientská část AJAX-CAT je webová aplikace, která využívá nových možností prohlížečů, které nyní umožňují komunikovat se serverem pomocí AJAX požadavků, nebo ukládání lokálních dat v klientském počítači pomocí technologie Web Storage z rodiny technologií HTML5. 
 
 \section{Instalace}
+Celý překladový systém lze spustit...
+
+
+
+\section{blbosti}
+
 -make, g++, libtool, autoconf
 
 svn checkout https://gnunet.org/svn/libmicrohttpd/
@@ -448,9 +564,6 @@ svn checkout https://gnunet.org/svn/libmicrohttpd/
 soubor INSTALL
 
 c++0x gnu svn checkout svn://gcc.gnu.org/svn/gcc/trunk
-
-\section{Virtuální systém}
-Celý překladový systém lze spustit...
 
 
 
