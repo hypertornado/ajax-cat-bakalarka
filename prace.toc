@@ -2,7 +2,7 @@
 \contentsline {chapter}{\numberline {1}P\IeC {\v r}eklad a strojov\IeC {\'y} p\IeC {\v r}eklad}{4}{chapter.1}
 \contentsline {section}{\numberline {1.1}P\IeC {\v r}ekladov\IeC {\'e} probl\IeC {\'e}my}{4}{section.1.1}
 \contentsline {subsection}{\numberline {1.1.1}Pro\IeC {\v c} je to t\IeC {\v e}\IeC {\v z}k\IeC {\'e}}{4}{subsection.1.1.1}
-\contentsline {subsection}{\numberline {1.1.2}Pro\IeC {\v c} je to t\IeC {\v e}\IeC {\v z}k\IeC {\'e}}{4}{subsection.1.1.2}
+\contentsline {subsection}{\numberline {1.1.2}Neexistence nejlep\IeC {\v s}\IeC {\'\i }ho p\IeC {\v r}ekladu}{4}{subsection.1.1.2}
 \contentsline {section}{\numberline {1.2}Historie strojov\IeC {\'e}ho p\IeC {\v r}ekladu}{4}{section.1.2}
 \contentsline {section}{\numberline {1.3}Sou\IeC {\v c}astnost strojov\IeC {\'e}ho p\IeC {\v r}ekladu}{5}{section.1.3}
 \contentsline {section}{\numberline {1.4}Computer-aided translation}{6}{section.1.4}
@@ -35,10 +35,10 @@
 \contentsline {subsubsection}{Ostatn\IeC {\'\i } funkce}{16}{section*.15}
 \contentsline {chapter}{\numberline {4}Implementace klientsk\IeC {\'e} \IeC {\v c}\IeC {\'a}sti}{17}{chapter.4}
 \contentsline {section}{\numberline {4.1}Instalace}{17}{section.4.1}
-\contentsline {section}{\numberline {4.2}blbosti}{17}{section.4.2}
-\contentsline {chapter}{Z\IeC {\'a}v\IeC {\v e}r}{18}{chapter*.16}
-\contentsline {chapter}{Seznam pou\IeC {\v z}it\IeC {\'e} literatury}{19}{chapter*.17}
-\contentsline {chapter}{Seznam tabulek}{20}{chapter*.18}
-\contentsline {chapter}{Seznam pou\IeC {\v z}it\IeC {\'y}ch zkratek}{21}{chapter*.19}
-\contentsline {chapter}{P\IeC {\v r}\IeC {\'\i }lohy}{22}{chapter*.20}
-\contentsline {section}{\numberline {4.3}server.ini.example}{22}{section.4.3}
+\contentsline {section}{\numberline {4.2}N\IeC {\'a}vod k pou\IeC {\v z}it\IeC {\'\i }}{17}{section.4.2}
+\contentsline {chapter}{Z\IeC {\'a}v\IeC {\v e}r}{19}{chapter*.16}
+\contentsline {chapter}{Seznam pou\IeC {\v z}it\IeC {\'e} literatury}{20}{chapter*.17}
+\contentsline {chapter}{Seznam tabulek}{21}{chapter*.18}
+\contentsline {chapter}{Seznam pou\IeC {\v z}it\IeC {\'y}ch zkratek}{22}{chapter*.19}
+\contentsline {chapter}{P\IeC {\v r}\IeC {\'\i }lohy}{23}{chapter*.20}
+\contentsline {section}{\numberline {4.3}server.ini.example}{23}{section.4.3}

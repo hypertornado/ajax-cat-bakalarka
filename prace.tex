@@ -45,7 +45,7 @@
 %% ale hlavně ho používáme k uložení metadat do PDF (včetně obsahu).
 %% POZOR, nezapomeňte vyplnit jméno práce a autora.
 \usepackage[ps2pdf,unicode]{hyperref}   % Musí být za všemi ostatními balíčky
-\hypersetup{pdftitle=AJAX CAT - webový editor s podporou pro překlad}
+\hypersetup{pdftitle=AJAX CAT --- webový editor s podporou pro překlad}
 \hypersetup{pdfauthor=Ondřej Odcházel}
 
 %%% Drobné úpravy stylu
@@ -125,7 +125,7 @@ Matematicko-fyzikální fakulta
 \vspace{15mm}
 
 % Název práce přesně podle zadání
-{\LARGE\bfseries AJAX CAT - webový editor s podporou pro překlad}
+{\LARGE\bfseries AJAX CAT --- webový editor s podporou pro překlad}
 
 \vfill
 
@@ -137,7 +137,7 @@ Matematicko-fyzikální fakulta
 
 \begin{tabular}{rl}
 
-Vedoucí diplomové práce: & RNDr. Ondřej Bojar, Ph.D. \\
+Vedoucí bakalářské práce: & RNDr. Ondřej Bojar, Ph.D. \\
 \noalign{\vspace{2mm}}
 Studijní program: & Informatika \\
 \noalign{\vspace{2mm}}
@@ -183,7 +183,7 @@ práce jako školního díla podle §60 odst. 1 autorského zákona.
 \vspace{10mm}
 
 \hbox{\hbox to 0.5\hsize{%
-V ........ dne ............
+V Praze dne 27. května 2011
 \hss}\hbox to 0.5\hsize{%
 Podpis autora
 \hss}}
@@ -198,7 +198,7 @@ Podpis autora
 \setlength\parskip{5mm}
 
 Název práce:
-AJAX CAT - webový editor s podporou pro překlad
+AJAX CAT --- webový editor s podporou pro překlad
 % přesně dle zadání
 
 Autor:
@@ -208,7 +208,7 @@ Katedra:  % Případně Ústav:
 Ústav formální a aplikované lingvistiky
 % dle Organizační struktury MFF UK
 
-Vedoucí diplomové práce:
+Vedoucí bakalářské práce:
 RNDr. Ondřej Bojar, Ph.D., Ústav formální a aplikované lingvistiky
 % dle Organizační struktury MFF UK, případně plný název pracoviště mimo MFF UK
 
@@ -224,6 +224,7 @@ Klíčová slova:
 
 Title:
 % přesný překlad názvu práce v angličtině
+AJAX CAT --- web editor with support for translation
 
 Author:
 Jméno a příjmení autora
@@ -269,9 +270,9 @@ Keywords:
 
 Obor strojového překladu jazyka zažívá v posledních letech opět velký rozvoj. Nové výpočetní i algoritmické možnosti umožňují vytváření stále lepších strojových překladů. Vytvořit univerzální překladový systém, který by dokázal nahradit překladatele lidské se však stále nepodařilo a je otázka, zda-li se to někdy v budoucnu povede. Již dnes jsou ale překladové systémy na úrovni, která sice nedokáže překladatele nahradit, ale v mnoha odvětvích usnadňuje jejich práci. Překladové systémy již nyní poskytují alespoň nápovědu, jak daný text přeložit. Překladatel však stále musí výstup z takového systému kontrolovat a editovat. Každý z těchto editačních zásahů představuje pro překladatele komplikaci a pokud je množství nutných zásahů vyšší, než je pro únosná mez, překladatel raději namísto editování výstupu překladového systému vytvoří překlad sám. Pro zjednodušení překladatelské práce je tedy potřeba nejen vylepšovat překladové systémy, ale také software kteří překladatelé pro interakci s překladovým systémem používají. Překladový software, který využívá pro nápovědu překladatelům strojový překlad je speciální případem tzv. CAT (computer--aided translation) systému.
 
-Cílem této bakalářské práce je implementace jednoho takového CAT systému. Tento systém se bude jmenovat AJAX-CAT a pro podporu překladu bude systém využívat překladový systém Moses. Celý projekt je rozdělen do dvou částí --- serverová a klientská část. Implementací serverové části bude vytvořen HTTP server. Tento server bude spouštět Mosese a skrz HTTP komunikaci bude poskytovat klientské části aplikace nápovědy k překladu. Požadavky budou dvojího typu. Klient se může systému zeptat na překlad věty ve zdrojovém jazyce. Server pak odpoví tabulkou překladových možností vygenerovanou Mosesem. Sloupce této tabulky jsou jednotlivé úseky ve zdrojovém překladovém úseku (typicky slova ve větě). V řádcích tabulky jsou pak přeložené úseky textu v cílovém jazyce. Úseky jsou seřazeny v tabulce tak, že čím výše je daný úsek, tím větší je pravděpodobnost toho, že se jedná o "správný překlad". Tato tabulka s více variantami překladu je jedním ze základů implementovaného CAT systému.
+Cílem této bakalářské práce je implementace jednoho takového CAT systému. Tento systém se bude jmenovat AJAX-CAT a pro podporu překladu bude systém využívat překladový systém Moses. Celý projekt je rozdělen do dvou částí --- serverová a klientská část. Implementací serverové části bude vytvořen HTTP server. Tento server bude spouštět Mosese a prostřednictvím komunikace HTTP bude poskytovat klientské části aplikace nápovědy k překladu. Požadavky budou dvojího typu. Klient se může systému zeptat na překlad věty ve zdrojovém jazyce. Server pak odpoví tabulkou překladových možností vygenerovanou Mosesem. Sloupce této tabulky jsou jednotlivé úseky ve zdrojovém překladovém úseku (typicky slova ve větě). V řádcích tabulky jsou pak přeložené úseky textu v cílovém jazyce. Úseky jsou seřazeny v tabulce tak, že čím výše je daný úsek, tím větší je pravděpodobnost toho, že se jedná o "správný překlad". Tato tabulka s více variantami překladu je jedním ze základů implementovaného CAT systému.
 
-Dalším typem klientského požadavku bude lokální nápověda během překladu. Jedná se o podobný druh nápovědy jakou nám poskytují moderní internetové vyhledávače. V nich uživatel většinou nemusí psát celý vyhledávací dotaz a může využí nápovědy, která mu nabízí statisticky nejčastější podobné dotazy. Podobně i serverová část AJAX-CAT bude dávat nápovědu, jak dále pokračovat s překladem. Aby překladový systém mohl tuto nápovědu poskytnout, pořebuje znát tři parametry. Text ve zdrojovém jazyce, vektor určující, které úseky jsou již přeloženy (překlad často nezachovává slovosled původního textu) a již přeložená část věty v cílovém jazyce. Jedním z cílů při implementaci AJAX-CAT je také rozšíření možností Mosese tak, aby s těmito třemi parametry dokázal pracovat a vygeneroval nápovědu, jak v překladu pokračovat.
+Dalším typem klientského požadavku bude lokální nápověda během překladu. Jedná se o podobný druh nápovědy jakou nám poskytují moderní internetové vyhledávače. V nich uživatel většinou nemusí psát celý vyhledávací dotaz a může využí nápovědy, která mu nabízí statisticky nejčastější podobné dotazy. Podobně i serverová část AJAX-CAT bude dávat nápovědu, jak dále pokračovat s překladem. Aby překladový systém mohl tuto nápovědu poskytnout, potřebuje znát tři parametry. Text ve zdrojovém jazyce, vektor určující, které úseky jsou již přeloženy (překlad často nezachovává slovosled původního textu) a již přeložená část věty v cílovém jazyce. Jedním z cílů při implementaci AJAX-CAT je také rozšíření možností Mosese tak, aby s těmito třemi parametry dokázal pracovat a vygeneroval nápovědu, jak v překladu pokračovat.
 
 Serverová část AJAX-CAT tedy vytvoří rozhraní pro komunikaci s Mosesem. Toto rozhraní pak může být použitelné i pro jiný CAT systém.
 
@@ -295,7 +296,7 @@ Je tedy vidět, že úloha překladu je velice komplexní a vyžaduje velké mno
 
 %Tyto informace je velmi obtížné interpretovat ve formátu, který by mohl překladový systém použít. 
 
-\subsection{Proč je to těžké}
+\subsection{Neexistence nejlepšího překladu}
 Hledání algoritmu na řešení úlohy je jedním ze základních úkolů informatiky. Pokud máme algoritmus, dokážeme často určit, jak je dobrý a leckdy můžeme i dokázat, že žádný rychlejší, tedy "lepší", nejde zkonstruovat. Problémem úlohy překladu je, že podobnou metriku porovnávající kvalitu překladů nemáme. Porovnání kvality dvou překladů je záležitostí vkusu. Nějaký staromilec může preferovat přes 200 let staré překlady her Williama Shakespeara od Karla Ignáce Tháma, někdo dá přednost novějším překladům Martina Hilského. Nejde říct, který z nich je automaticky lepší. Překlad je v tomto ohledu spíše druhem umění, než úlohou, která se dá formalizovat.
 
 %Jazyk není neměnný a v průběhu času se vyvíjí. Můžeme to vidět například na Bibli. Její nejznámější překlad, Bible Kralická je přes 400 let starý. Vznikají proto nové překlady, které jsou dnešním čtenářům přístupnější. Žádný překlad tedy nelze označit za dokonalý a navždy správný.
@@ -318,7 +319,7 @@ Výpočetní výkon počítačů stále roste rychlostí Mooreova zákona \footn
 Kromě systému využívajících statických postupů se stále vyvíjí i pravidlové překladové systémy. Příkladem může být open-source systém Apertium. \footnote{http://www.apertium.org/} Stejně jako u dalších podobných systémů se pro každou dvojici překládaných jazyků musí vytvořit slovníky a překladová pravidla. Vytvořit tato pravidla je velmi náročné a nákladné. Navíc jsou tato pravidla často použitelná pouze pro jeden jazykový pár.
 
 \section{Computer-aided translation}
-CAT, neboli computer-aided translation, či computer-assisted translation je zkratka označující systémy pro podporu překladu. Tyto systémy poskytují překladateli podporu při překladu. Mohou to být jak desktopové, tak online aplikace. Často se liší stylem, jakým překladatele podporují. Jedním z druhů podpory může být nabídka předchozích překladů z paměti. Této paměti se říká překladová paměť, obsahuje přeložené úseky textu a překladatel si tuto paměť buduje buď sám, nebo může využít nějakou z kolektivních databází. Příkladem desktopové aplikace může být například OmegaT. Ta je určena pro použití profesionálními překladateli, kterým nabízí úseky z překladové paměti. Hledaný úsek nemusí odpovídat aktuálně překládanému úseku na 100 procent, OmegaT implementuje algoritmus, který pozná i blízké shody \footnote{fuzzy algoritmus}.
+CAT, neboli computer-aided translation, či computer-assisted translation je zkratka označující systémy pro podporu překladu. Mohou to být jak desktopové, tak online aplikace. Často se liší stylem, jakým překladatele podporují. Jedním z druhů podpory může být nabídka předchozích překladů z paměti. Této paměti se říká překladová paměť, obsahuje přeložené úseky textu a překladatel si tuto paměť buduje buď sám, nebo může využít nějakou z kolektivních databází. Příkladem desktopové aplikace může být OmegaT. Ta je určena pro použití profesionálními překladateli, kterým nabízí úseky z překladové paměti. Hledaný úsek nemusí odpovídat aktuálně překládanému úseku na 100 procent, OmegaT implementuje algoritmus, který pozná i blízké shody.
 
 Další ukázkou CAT pomůcky je Google Translator Toolkit (Nástroje pro překladatele). Tato internetová aplikace umožňuje překladateli nahrát si svou překladovou paměť, kterou pak může využít při překladu. Dále nástroj nabízí výsledky překladu z Google Translate, který dále může uživatel editovat.
 
@@ -326,16 +327,16 @@ Zajímavým CAT systémem je caitra. Tato online pomůcka postavená na překlad
 
 \chapter{Moses}
 
-V této kapitole bude popsána architektura frázových překladových systémů (anglicky PBMT - phrase-based machine translation). Konkrétně bude popsána architektura systému Moses.
+V této kapitole bude popsána architektura frázových překladových systémů (anglicky PBMT --- phrase-based machine translation). Konkrétně bude popsána architektura systému Moses.
 
 \section{Princip frázového překladu}
 
 \subsection{Jazykový a překladový model}
 Obecně lze postup při překladu znázornit pomocí Obrázku \ref{phrase-based}. Moses používá k překladu vstupu na výstup překladový a jazykový model. Překladový model zachycuje četnost překladů frází délky n. Tyto fráze jsou také označovány jako n-gramy. Překladový model lze získat z paralelních korpusů, tedy přeložených textů mezi zdrojovým a cílovým jazykem. Kvalita překladů je často úměrná velikosti paralelních korpusů, ze kterých překladový model generujeme. Tato závislost však není lineární, zdvojnásobení korpusu zlepší překladový model jen o málo.
 
-Jazykový model zachycuje četnost výskytu frází v cílovém jazyce. Díky jazykovému modelu dokáže Moses při generování překladu alespoň částečně ohlídat, aby text v cílovém jazyce dával smysl. Kvalitní jazykový model lze získat poměrně snadno - stačí velké množství textů v cílovém jazyce.
+Jazykový model zachycuje četnost výskytu frází v cílovém jazyce. Díky jazykovému modelu dokáže Moses při generování překladu alespoň částečně ohlídat, aby text v cílovém jazyce dával smysl. Kvalitní jazykový model lze získat poměrně snadno --- stačí velké množství textů v cílovém jazyce.
 
-Moses pak zjednodušeně hledá překlad tak, že každé části vstupu přidává (vstupním frázím) přiřazuje fráze z překladového modelu. Pomocí jazykového modelu kontroluje alespoň částečně jazykovou korektnost výstupu. Hledání nejlepšího překladu je vlastně hledáním nejpravděpodobnější posloupnosti slov, která pokrývá všechny části vstupu. Možností překladu je obecně exponenciální množství. Přestože se u překladových systémů cení na prvním místě kvalita překladu, získání odpovědi v dostatečném čase je často také důležitou podmínkou. Rychlé hledání v překladových hypotézách je jednou z klíčových vlastností Mosese.
+Moses pak zjednodušeně hledá překlad tak, že každé části vstupu přiřazuje (vstupním frázím) fráze z překladového modelu. Pomocí jazykového modelu kontroluje alespoň částečně jazykovou korektnost výstupu. Hledání nejlepšího překladu je vlastně hledáním nejpravděpodobnější posloupnosti slov, která pokrývá všechny části vstupu. Možností překladu je obecně exponenciální množství. Přestože se u překladových systémů cení na prvním místě kvalita překladu, získání odpovědi v dostatečném čase je často také důležitou podmínkou. Rychlé hledání v překladových hypotézách je jednou z klíčových vlastností Mosese.
 
 \begin{figure}[t]
 \centerline{\mbox{\includegraphics[width=120mm]{pictures/phrase-based}}}
@@ -516,7 +517,7 @@ Součástí třídy je fronta požadavků typu Request. Instance třídy MosesPa
 Tímto vláknem je právě vlákno, které spouští konstruktor třídy MosesPair na konci svého běhu. Vlákno je tedy obsluhované statickou metodu {\tt reader}. Tato metoda se nejdříve připojí k pojmenované rouře do které posílá Moses svůj výstup a postupně ji čte. Výstupem je tedy řádek s pořadovým číslem dotazu na Mosese. Vlákno tedy nejprve pomocí třídy Line rozdělí řádek na části a získá toto pořadové číslo. Z pořadového čísla na předchozím řádku dokáže rozlišit situaci, kdy Moses začíná vracet odpověď na další požadavek. Jelikož je při požadavcích na Mosese vkládán i "nesmyslný řetězec", jsou zajímavé pouze odpovědi se sudým pořadovým číslem. Pro každou takovou odpověď vezme metoda jeden požadavek z fronty. Díky tomu, že Moses odpovídá na požadavky lineárně, odpovídá výstup z Mosese požadavku na začátku fronty (prvek, který je ve frontě nejdéle). Tomuto požadavku předává řádky z Mosese. Pak uvolní zámek v požadavku, což umožní, aby metoda get\_translation mohla vrátit výsledek.
 
 \subsubsection{Třída Request}
-Od této třídy dědí všechny ostatní druhy požadavků na server. Semafor {\tt sem} se pomocí metody {\tt lock} zamyká na začátku zpracování požadavku a odemyká se pomocí metody {\tt unlock} na konci zpracování. Každý požadavek má dvě metody - {\tt process\_line} a {\tt get\_result}.
+Od této třídy dědí všechny ostatní druhy požadavků na server. Semafor {\tt sem} se pomocí metody {\tt lock} zamyká na začátku zpracování požadavku a odemyká se pomocí metody {\tt unlock} na konci zpracování. Každý požadavek má dvě metody --- {\tt process\_line} a {\tt get\_result}.
 
 Metoda {\tt process\_line} zpracovává řádek výstupu z Mosese. Ten má typicky tvar: \\
 
@@ -551,21 +552,40 @@ Tato třída je potomkem třídy {\tt Request}. Odpovídá požadavku suggestion
 Klientská část AJAX-CAT je webová aplikace, která využívá nových možností prohlížečů, které nyní umožňují komunikovat se serverem pomocí AJAX požadavků, nebo ukládání lokálních dat v klientském počítači pomocí technologie Web Storage z rodiny technologií HTML5. 
 
 \section{Instalace}
-Celý překladový systém lze spustit...
+Pro spuštění aplikace je potřeba mít nainstalován moderní webový prohlížeč. Nejdůležitějším požadavkem je, aby prohlížeč podporoval technologii lokálního uložiště Web Storage. Toto uložiště podporují všechny moderní browsery\footnote{http://caniuse.com/\#feat=namevalue-storage}. Dále je potřeba mít nainstalovaný webový server Apache s podporou pro PHP skripty.
 
+Samotná instalace je pak snadná, stačí překopírovat složku ajax-cat-client do složky, kterou používá Apache pro spouštěné skripty. Na linuxových systémech je to typicky složka {\tt /var/www}.
 
+Nyní stačí v prohlížeči zadat adresu {\tt http://localhost/ajax-cat/} a měla by se objevit úvodní stránka klientské části AJAX-CAT.
 
-\section{blbosti}
+Potom je ještě pořeba propojit klientskou část se serverovou. Nejprve je potřeba upravit soubor {\tt libraries/pairs.js }. V něm je potřeba upravit pole {\tt pairs} tak, aby položky code odpovídali názvům překladových dvojic na serverové části. Položka description slouží jako název překladového páru prezentovaný uživateli. Pokud máme jen jeden překladový pár s kódem "cs-en" a názvem "czech-english", může vypadat definice proměnné {\tt pairs} takto: \\
 
--make, g++, libtool, autoconf
+{\tt var pairs =
 
-svn checkout https://gnunet.org/svn/libmicrohttpd/
+[\{
 
-soubor INSTALL
+"code":"cs-en",
 
-c++0x gnu svn checkout svn://gcc.gnu.org/svn/gcc/trunk
+"description":"czech-english"
 
+\}]; } \\
 
+Dále je potřeba dát klientské části HTTP adresu serverové části. Pkud server běží na localhostu a portu číslo 8888, není potřeba nic měnit. Jinake je potřeba upravit poslední řádky PHP skriptů {\tt proxy/suggestion.php} a {\tt proxy/table.php}.
+
+Při použití virtuálního hosta není potřeba nic instalovat, stačí zadat výše uvedenou adresu do prohlížeče.
+
+\section{Návod k použití}
+Na titulní stránce se kromě záhlaví a zápatí objeví i sekce "Your translations" a "New translation". V sekci "Your translations" se nachází seznam překládaných dokumentů, který je při prvním použití aplikace prázdný. Překlad nového dokumentu se zahájí vložením zdrojového textu do textové oblasti v sekci "New Translation" a stisknutím tlačítka "Start translating". Proběhne přesměrování na stránku {\tt document.html} s překládaným dokumentem. Každý dokument má svůj šestnáctimístný hash kód, který se nachází v hashové části URL dokumentu.
+
+V záhlaví dokumentu se nachází jeho název a překladový pár který je použit k podpoře překladu. Název i překladový pár jdou změnit v nabídce po kliknutí na tlačítko "Settings". Kliknutím na "Save" se dokument uloží do lokální paměti prohlížeče pomocí Web Storage. Kliknutím na "Preview" se zobrazí dokument v textové formě vhodné pro jeho vyexportování.
+
+Dokument je při začátku překladu rozdělen na věty. Věty zdrojového textu překladu se při zobrazení dokumentu nachází v levé části obrazovky. Jejich odpovídající překlady na straně pravé. Aktuálně překládaná věta se nachází v modrém boxu. Na jinou větu lze přepnou kliknutím myší na příslušnou větu, nebo pomocí klávesových tlačítek "Page Up" respektive "Page Down".
+
+Aktuální věta má v boxu nejprve znění ve zdrojovém textu, pod ním je textová oblast pro vkládání překladu věty. Překladatel může využít nápovědy s překladem. Pod textovou oblastí je seznam nápověd od serverové části. Pokud by chtěl překladatel nějakou nápovědu použít, může jí vybrat buď tím, že na ni najede myší, nebo pomocí kurzorových kláves "šipka nahoru" a "šipka dolů". Pomocí kliku myší, nebo stisknutím klávesy "Enter" použije celou nápovědu. Klávesou "tabulátor" použije pouze první slovo nápovědy. 
+
+Další možností nápovědy je použít tabulku překladových možností. Tato tabulka obsahuje v záhlaví slova zdrojového textu. Pod těmito slovy jsou zobrazeny nejpravděpodobnější varianty překladu podle Mosese. Kliknutím myší jde opět tato nápověda použít při překladu. Záhlaví tabulky zároveň slouží k předávání informací serveru o tom, které části věty jsou přeložené. Kliknutím na slovo v záhlaví zmodrá jeho pozadí. Zmodralé části považuje server za přeložené a při poskytování nápovědy je neuvažuje.
+
+Překladatel může kdykoliv přerušit překlad a později se k němu ve svém prohlížeči opět vrátit. Na úvodní stránce se mu v sekci "Your translations" zobrazí všechny jeho překlady spolu s názvem překladového páru a procentem udávajícím, kolik vět je již přeloženo. Po kliknutí na ikonku s křížkem má možnost daný dokument smazat.
 
 % Ukázka použití některých konstrukcí LateXu (odkomentujte, chcete-li)
 % \include{ukazka}
