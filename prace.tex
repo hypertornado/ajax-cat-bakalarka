@@ -40,6 +40,8 @@
 \usepackage{amsthm}
 %\usepackage[pdftex]{graphicx}
 
+\usepackage{url}
+\DeclareUrlCommand\url{\def\UrlLeft{<}\def\UrlRight{>} \urlstyle{tt}}
 
 %% Balíček hyperref, kterým jdou vyrábět klikací odkazy v PDF,
 %% ale hlavně ho používáme k uložení metadat do PDF (včetně obsahu).
@@ -214,9 +216,11 @@ RNDr. Ondřej Bojar, Ph.D., Ústav formální a aplikované lingvistiky
 
 Abstrakt:
 % abstrakt v rozsahu 80-200 slov; nejedná se však o opis zadání diplomové práce
+Cílem této práce je implementace systému pro podporu překladu. Systém je rozdělen na serverovou a klientskou část. Serverová část využívá systém strojového překladu ke generování nápověd při překladu. Prvním druhem nápovědy je tabulka s různými variantami překladu každé fráze překládaného textu. Dalším druhem nápovědy jsou návrhy překladu. Tyto návrhy v každé fázi překladu představují nejpravděpodobnější možnosti pokračování překladu. Klientská část systému je webová aplikace ovládaná překladatelem, kterému nabízí nápovědy získané ze serveru. Kromě toho se také klientská část stará o jednoduchou správu překladových dokumentů.
 
 Klíčová slova:
 % 3 až 5 klíčových slov
+překlad, webová aplikace, CAT
 
 \vss}\nobreak\vbox to 0.49\vsize{
 \setlength\parindent{0mm}
@@ -227,14 +231,14 @@ Title:
 AJAX CAT --- web editor with support for translation
 
 Author:
-Jméno a příjmení autora
+Ondřej Odcházel
 
 Department:
-Název katedry či ústavu, kde byla práce oficiálně zadána
+Institute of Formal and Applied Linguistics
 % dle Organizační struktury MFF UK v angličtině
 
 Supervisor:
-Jméno a příjmení s tituly, pracoviště
+RNDr. Ondřej Bojar, Ph.D., Institute of Formal and Applied Linguistics
 % dle Organizační struktury MFF UK, případně plný název pracoviště
 % mimo MFF UK v angličtině
 
@@ -244,6 +248,7 @@ Abstract:
 
 Keywords:
 % 3 až 5 klíčových slov v angličtině
+translation, web application, CAT
 
 \vss}
 
@@ -268,18 +273,21 @@ Keywords:
 \chapter*{Úvod}
 \addcontentsline{toc}{chapter}{Úvod}
 
-Obor strojového překladu jazyka zažívá v posledních letech opět velký rozvoj. Nové výpočetní i algoritmické možnosti umožňují vytváření stále lepších strojových překladů. Vytvořit univerzální překladový systém, který by dokázal nahradit překladatele lidské se však stále nepodařilo a je otázka, zda-li se to někdy v budoucnu povede. Již dnes jsou ale překladové systémy na úrovni, která sice nedokáže překladatele nahradit, ale v mnoha odvětvích usnadňuje jejich práci. Překladové systémy již nyní poskytují alespoň nápovědu, jak daný text přeložit. Překladatel však stále musí výstup z takového systému kontrolovat a editovat. Každý z těchto editačních zásahů představuje pro překladatele komplikaci a pokud je množství nutných zásahů vyšší, než je pro únosná mez, překladatel raději namísto editování výstupu překladového systému vytvoří překlad sám. Pro zjednodušení překladatelské práce je tedy potřeba nejen vylepšovat překladové systémy, ale také software kteří překladatelé pro interakci s překladovým systémem používají. Překladový software, který využívá pro nápovědu překladatelům strojový překlad je speciální případem tzv. CAT (computer--aided translation) systému.
+Obor strojového překladu jazyka zažívá v posledních letech opět velký rozvoj. Nové výpočetní i algoritmické možnosti umožňují vytváření stále lepších strojových překladů. Vytvořit univerzální překladový systém, který by dokázal nahradit překladatele lidské se však stále nepodařilo a je otázka, zda-li se to někdy v budoucnu povede. Již dnes jsou ale překladové systémy na úrovni, která sice nedokáže překladatele nahradit, ale v mnoha odvětvích usnadňuje jejich práci. Překladové systémy již nyní poskytují alespoň nápovědu, jak daný text přeložit. Překladatel však stále musí výstup z takového systému kontrolovat a editovat. Každý z těchto editačních zásahů představuje pro překladatele komplikaci a pokud je množství nutných zásahů vyšší, než je únosná mez, překladatel raději namísto editování výstupu překladového systému vytvoří překlad sám bez počítačové nápovědy. Pro zjednodušení překladatelské práce je tedy potřeba nejen vylepšovat překladové systémy, ale také software jenž překladatelé pro interakci s překladovým systémem používají. Překladový software, který využívá pro nápovědu překladatelům strojový překlad je speciální případem tzv. CAT (computer---aided translation) systému.
 
-Cílem této bakalářské práce je implementace jednoho takového CAT systému. Tento systém se bude jmenovat AJAX-CAT a pro podporu překladu bude systém využívat překladový systém Moses. Celý projekt je rozdělen do dvou částí --- serverová a klientská část. Implementací serverové části bude vytvořen HTTP server. Tento server bude spouštět Mosese a prostřednictvím komunikace HTTP bude poskytovat klientské části aplikace nápovědy k překladu. Požadavky budou dvojího typu. Klient se může systému zeptat na překlad věty ve zdrojovém jazyce. Server pak odpoví tabulkou překladových možností vygenerovanou Mosesem. Sloupce této tabulky jsou jednotlivé úseky ve zdrojovém překladovém úseku (typicky slova ve větě). V řádcích tabulky jsou pak přeložené úseky textu v cílovém jazyce. Úseky jsou seřazeny v tabulce tak, že čím výše je daný úsek, tím větší je pravděpodobnost toho, že se jedná o "správný překlad". Tato tabulka s více variantami překladu je jedním ze základů implementovaného CAT systému.
+Cílem této bakalářské práce je implementace jednoho takového CAT systému. Tento systém pro podporu překladu využívá frázový překladový systém do kterého implementuje některé nové vlastnosti. Celý projekt je rozdělen do dvou částí --- serverová a klientská část.
 
-Dalším typem klientského požadavku bude lokální nápověda během překladu. Jedná se o podobný druh nápovědy jakou nám poskytují moderní internetové vyhledávače. V nich uživatel většinou nemusí psát celý vyhledávací dotaz a může využí nápovědy, která mu nabízí statisticky nejčastější podobné dotazy. Podobně i serverová část AJAX-CAT bude dávat nápovědu, jak dále pokračovat s překladem. Aby překladový systém mohl tuto nápovědu poskytnout, potřebuje znát tři parametry. Text ve zdrojovém jazyce, vektor určující, které úseky jsou již přeloženy (překlad často nezachovává slovosled původního textu) a již přeložená část věty v cílovém jazyce. Jedním z cílů při implementaci AJAX-CAT je také rozšíření možností Mosese tak, aby s těmito třemi parametry dokázal pracovat a vygeneroval nápovědu, jak v překladu pokračovat.
+Serverovou částí je server zpracovávající požadavky HTTP. Tento server obsluhuje překladový systém, zpracovává jeho výstupy a vrací je jako odpověď na požadavek.
 
-Serverová část AJAX-CAT tedy vytvoří rozhraní pro komunikaci s Mosesem. Toto rozhraní pak může být použitelné i pro jiný CAT systém.
+%Požadavky budou dvojího typu. Klient se může systému zeptat na překlad věty ve zdrojovém jazyce. Server pak odpoví tabulkou překladových možností vygenerovanou Mosesem. Sloupce této tabulky jsou jednotlivé úseky ve zdrojovém překladovém úseku (typicky slova ve větě). V řádcích tabulky jsou pak přeložené úseky textu v cílovém jazyce. Úseky jsou seřazeny v tabulce tak, že čím výše je daný úsek, tím větší je pravděpodobnost toho, že se jedná o "správný překlad". Tato tabulka s více variantami překladu je jedním ze základů implementovaného CAT systému.
 
-Kromě serverové bude mít AJAX-CAT i klientskou část. Ta bude sloužit k samotné interakci překladatele s překladový systémem. Tato interakce by měla být k uživateli co nejvíce přátelská. Typický příklad užívání AJAX-CAT by měl být následující: překladatel zadá zdrojový text pro překlad a zdrojový a cílový jazyk překladu. Klientská část tento text rozseká do bloků (typicky vět) a ke každé větě překladateli nabídne nápovědu generovanou v serverové části.
+%Dalším typem klientského požadavku bude lokální nápověda během překladu. Jedná se o podobný druh nápovědy jakou nám poskytují moderní internetové vyhledávače. V nich uživatel většinou nemusí psát celý vyhledávací dotaz a může využí nápovědy, která mu nabízí statisticky nejčastější podobné dotazy. Podobně i serverová část AJAX-CAT bude dávat nápovědu, jak dále pokračovat s překladem. Aby překladový systém mohl tuto nápovědu poskytnout, potřebuje znát tři parametry. Text ve zdrojovém jazyce, vektor určující, které úseky jsou již přeloženy (překlad často nezachovává slovosled původního textu) a již přeložená část věty v cílovém jazyce. Jedním z cílů při implementaci AJAX-CAT je také rozšíření možností Mosese tak, aby s těmito třemi parametry dokázal pracovat a vygeneroval nápovědu, jak v překladu pokračovat.
 
-Součástí implementace klientské části bude i jednoduchý systém pro zprávu obsahu, aby překladatel mohl pokračovat v překladu i po znovuotevření aplikace. Klientská část AJAX-CAT by měla být vůči serverové části do značné míry autonomní. Překladatel by měl mít možnost pracovat s klientskou částí i v případě přerušení spojení se serverem.
+%Serverová část AJAX-CAT tedy vytvoří rozhraní pro komunikaci s Mosesem. Toto rozhraní pak může být použitelné i pro jiný CAT systém.
 
+Klientskou část implementovaného CAT systému používá uživatel k samotnému překladu. Tato část komunikuje se serverem a nabízí tím uživateli možnost použít nápovědu k překladu z překladového systému. Při implementaci klientské části byl kladen důraz zejména na uživatelskou přívětivost, která umožňuje, aby tento CAT systém mohl využívat i překladatel bez přílišných technických znalostí. Klientská část je webová aplikace. Překladatel tedy pracuje v okně svého prohlížeče. Typický příklad užívání aplikace by měl být následující: překladatel zadá zdrojový text pro překlad a zdrojový a cílový jazyk překladu. Aplikace tento text rozdělí do bloků (typicky vět). Překladatel tyto věty postupně překládá a CAT systém mu k tomu nabízí různé druhy nápovědy, které by měly překladový proces nejen zrychlovat, ale také zvyšovat kvalitu výstupu. Součástí implementace klientské části je i jednoduchý systém pro správu obsahu, který překladateli dovoluje pokračovat v překladu i při dalším otevření okna prohlížeče.
+
+Klientská i serverová část jsou na sobě do značné míry nezávislé. Klientská část může fungovat i při přerušeném spojení se serverem minimálně jako správce překladových dokumentů. Serverová část může obsluhovat i nějaký jiný CAT systém.
 
 \chapter{Překlad a strojový překlad}
 
@@ -288,16 +296,16 @@ Překlad je proces přenesení významu z textu ve zdrojovém jazyce do jazyka c
 \section{Překladové problémy}
 
 \subsection{Proč je to těžké}
-Bez hlubších jazykových znalostí se může jevit úloha překladu snadná, mezi většinou jazyků můžeme přeci použít slovník. Bohužel to ale tak snadné není. Vezměme si například anglické slovo "house", které bychom chtěli přeložit do češtiny. Většinu výskytů slova "house" lze přeložit jako "dům". Pokud ale překládáme text o anglické královně, kde se objeví sousloví "House of Windsor", zřejmě není řeč o domu, kde bydlí Windsorové, ale o "rodu Windsorů". Slovo "house" zde tedy nemá význam "dům", ale "rod". Překladatel tedy při textu potřebuje znát kontext ve kterém je slovo použito. Často je také nutné, aby překladatel byl odborníkem na téma překládaného textu.
+Bez hlubších jazykových znalostí se může jevit úloha překladu snadná, mezi většinou jazyků můžeme přeci použít slovník. Bohužel to ale tak snadné není. Vezměme si například anglické slovo \clqq house\crqq, které bychom chtěli přeložit do češtiny. Většinu výskytů slova \clqq house\crqq lze přeložit jako \clqq dům\crqq . Pokud ale překládáme text o anglické královně, kde se objeví sousloví \clqq House of Windsor\crqq , zřejmě není řeč o domu, kde bydlí Windsorové, ale o \clqq rodu Windsorů\crqq . Slovo \clqq house\crqq  zde tedy nemá význam \clqq dům\crqq , ale \clqq rod\crqq . Překladatel tedy při textu potřebuje znát kontext ve kterém je slovo použito. Často je také nutné, aby překladatel byl odborníkem na téma překládaného textu.
 
-Úlohou překladu ale není pouze přenést jazykovou informaci z jednoho jazyka do jiného. Důležité je i přenesení celého významů, který má informace v kontextu pro který překládáme. Informace, že se nějaká událost koná v "8:00" v kontextu českého prostředí znamená, že se musím dostavit v 8 hodin ráno. Ale ve Spojených státech Amerických, kde se 24 hodinový systém příliš nepoužívá, je vhodné upřesnit, jestli se jedná o osm hodin ráno nebo večer. \footnote{zdroj: přednáška, Vladislav Kuboň}
+Úlohou překladu ale není pouze přenést jazykovou informaci z jednoho jazyka do jiného. Důležité je i přenesení celého významů, který má informace v kontextu pro který překládáme. Informace, že se nějaká událost koná v \clqq 8:00\crqq  v kontextu českého prostředí znamená, že se musím dostavit v 8 hodin ráno. Ale ve Spojených státech Amerických, kde se 24 hodinový systém příliš nepoužívá, je vhodné upřesnit, jestli se jedná o osm hodin ráno nebo večer. \footnote{zdroj: přednáška, Vladislav Kuboň}
 
-Je tedy vidět, že úloha překladu je velice komplexní a vyžaduje velké množství informací, které je obtížné nějákým formálním systémem definovat.
+Je tedy vidět, že úloha překladu je velice komplexní a vyžaduje velké množství informací, které je obtížné definovat formálním systémem.
 
 %Tyto informace je velmi obtížné interpretovat ve formátu, který by mohl překladový systém použít. 
 
 \subsection{Neexistence nejlepšího překladu}
-Hledání algoritmu na řešení úlohy je jedním ze základních úkolů informatiky. Pokud máme algoritmus, dokážeme často určit, jak je dobrý a leckdy můžeme i dokázat, že žádný rychlejší, tedy "lepší", nejde zkonstruovat. Problémem úlohy překladu je, že podobnou metriku porovnávající kvalitu překladů nemáme. Porovnání kvality dvou překladů je záležitostí vkusu. Nějaký staromilec může preferovat přes 200 let staré překlady her Williama Shakespeara od Karla Ignáce Tháma, někdo dá přednost novějším překladům Martina Hilského. Nejde říct, který z nich je automaticky lepší. Překlad je v tomto ohledu spíše druhem umění, než úlohou, která se dá formalizovat.
+Hledání algoritmu na řešení úlohy je jedním ze základních úkolů informatiky. Pokud máme algoritmus, dokážeme často určit, jak je dobrý a leckdy můžeme i dokázat, že žádný rychlejší, tedy \clqq lepší\crqq , nejde zkonstruovat. Problémem úlohy překladu je, že podobnou metriku porovnávající kvalitu překladů nemáme. Porovnání kvality dvou překladů je záležitostí vkusu. Nějaký staromilec může preferovat přes 200 let staré překlady her Williama Shakespeara od Karla Ignáce Tháma, někdo dá přednost novějším překladům Martina Hilského. Nejde říct, který z nich je automaticky lepší. Překlad je v tomto ohledu spíše druhem umění, než úlohou, která se dá formalizovat.
 
 %Jazyk není neměnný a v průběhu času se vyvíjí. Můžeme to vidět například na Bibli. Její nejznámější překlad, Bible Kralická je přes 400 let starý. Vznikají proto nové překlady, které jsou dnešním čtenářům přístupnější. Žádný překlad tedy nelze označit za dokonalý a navždy správný.
 
@@ -307,36 +315,37 @@ Hledání algoritmu na řešení úlohy je jedním ze základních úkolů infor
 
 Na počátku dějin strojového překladu stála, podobně jako v mnoha jiných oborech, armáda. Spojené státy Americké byli v padesátých letech ve Studené válce se Sovětským svazem. V této válce beze zbraní sehráli velkou úlohu i výzvědné služby, které zachytávali velké množství nepřátelských zpráv. Tyto zprávy bylo nutné co nejrychleji přeložit. A právě v této době se zrodila myšlenka použít k tomuto účelu počítače, které byli produktem předchozího válečného konfliktu, 2. světové války.\footnote{http://www.hutchinsweb.me.uk/GU-IBM-2005.pdf} Významnou demonstrací použití strojového překladu se v roce 1954 stal takzvaný Georgetownský experiment. Pro tento experiment vyvinula Georgetownská univerzita spolu s firmou IBM překladový systém pro překlad z ruštiny do angličtiny. Tento systém používal slovník 250 slov a 6 gramatických pravidel. Jeho doménou byly zejména překlady v oblasti chemie. Během experimentu bylo přeloženo více než 60 vět. Experiment byl všeobecně přijat jako úspěch, což donutilo americkou vládu investovat v následujících letech do oblasti strojového překladu.
 
-Následovaly léta práce zejména v SSSR a USA na systémech pro automatické překlady zejména mezi ruštinou a angličtinou. Žádný dobře použitelný systém, který by poskytoval uspokojivé výsledky, však nevzniknul. Pochybnosti ohledně možností strojového překladu vyjádřil na konci padesátých let lingvista Yehoshua Bar-Hillel. Ten argumentoval pomocí anglické věty "The box was in the pen." Překlad této věty bynapříklad  mohl být: "Pero bylo v ohradě." Jelikož anglické slovo "pen" znamená "pero" i "ohrada", musí mít překladový systém, který chce větu přeložit správně, sémantickou informaci, která by mu napověděla, že krabice nemůže být peru, tedy že správným překladem slova "pen" do češtiny je v tomto kontextu slovo "ohrada".
+Následovaly léta práce zejména v SSSR a USA na systémech pro automatické překlady zejména mezi ruštinou a angličtinou. Žádný dobře použitelný systém, který by poskytoval uspokojivé výsledky, však nevznikl. Pochybnosti ohledně možností strojového překladu vyjádřil na konci padesátých let lingvista Yehoshua Bar-Hillel. Ten argumentoval pomocí anglické věty \clqq The box was in the pen.\crqq  Překlad této věty by například  mohl být: \clqq Pero bylo v ohradě.\crqq  Jelikož anglické slovo \clqq pen\crqq  znamená \clqq pero\crqq  i \clqq ohrada\crqq , musí mít překladový systém, který chce větu přeložit správně, sémantickou informaci, která by mu napověděla, že krabice nemůže být peru, tedy že správným překladem slova \clqq pen\crqq  do češtiny je v tomto kontextu slovo \clqq ohrada\crqq .
 
 I z tohoto důvodu bylo vytvoření komplexního překladového systému v té době zřejmě nemožné. Americká vláda však dále pokračuje ve financování výzkumu. V roce 1966 vyšla zpráva expertní skupiny ALPAC (Automatic Language Processing Advisory Committee).\footnote{http://www.hutchinsweb.me.uk/ALPAC-1996.pdf} Která doporučovala americké vládě další postup při financování překladového výzkumu. Zpráva zmenšovala optimismus, vyvolaný zejména Georgetownským experimentem, že se v dohledné době podaří vytvořit kvalitní systém pro strojový překlad. Výsledkem bylo téměř úplné zastavení financování výzkumu americkou vládou. Výzkum dále pokračoval zejména v Evropě, nebo Kanadě. Právě v kanadském Montrealu vznikl systém METEO. Ten byl v letech 1981 až 2001 používán pro překlad meteorologických zpráv mezi angličtinou a francouzštinou. Právě omezená překladová doména systému umožnila nabízet kvalitní překlady předpovědí počasí.
 
-\section{Součastnost strojového překladu}
-V posledních letech se spolu s pokračující globalizací světa a stále vyšší penetrací internetového připojení, zvyšuje i poptávka po překladech. Nadnárodní firmy potřebují při svém růstu stále více překladů. Dalším impulzem zvyšujícím popávku po překladech je i rozšiřování Evropské Unie. V součastnosti unie používá 23 oficiálních jazyků ve kterých musí být přístupné všechny důležité úřední dokumenty. Tvorba tolika překladů je velice pracná a nákladná, což vytváří poptávku po zjednodušením procesu překladu těchto dokumentů.
+\section{Současnost strojového překladu}
+V posledních letech se spolu s pokračující globalizací světa a stále vyšší penetrací internetového připojení, zvyšuje i poptávka po překladech. Nadnárodní firmy potřebují při svém růstu stále více překladů. Dalším impulzem zvyšujícím poptávku po překladech je i rozšiřování Evropské Unie. V současnosti unie používá 23 oficiálních jazyků ve kterých musí být přístupné všechny důležité úřední dokumenty. Tvorba tolika překladů je velice pracná a nákladná, což vytváří poptávku po zjednodušením procesu překladu těchto dokumentů.
 
-Výpočetní výkon počítačů stále roste rychlostí Mooreova zákona \footnote{ftp://download.intel.com/research/silicon/moorespaper.pdf}, což v posledních letech otevřelo možnosti pro použití statistických metod ve strojovém překladu. Toho využívá statistický překladový systém Moses, open-source překladový systém, který je využit i v AJAX-CAT. Dalším známým statistickým překladovým systémem je Google Translate.
+Výpočetní výkon počítačů stále roste a ceny procesorů klesají, což v posledních letech otevřelo možnosti pro použití statistických metod ve strojovém překladu. Toho využívají frázové statistický překladové systémy. Příkladem takového překladového systému je open source systém Moses. Dalším takovým, tentokrát komerčním, systémem je Google Translate.
 
-Kromě systému využívajících statických postupů se stále vyvíjí i pravidlové překladové systémy. Příkladem může být open-source systém Apertium. \footnote{http://www.apertium.org/} Stejně jako u dalších podobných systémů se pro každou dvojici překládaných jazyků musí vytvořit slovníky a překladová pravidla. Vytvořit tato pravidla je velmi náročné a nákladné. Navíc jsou tato pravidla často použitelná pouze pro jeden jazykový pár.
+Kromě systému využívajících statických postupů se stále vyvíjí i pravidlové překladové systémy. Příkladem může být open source systém Apertium. \footnote{http://www.apertium.org/} Stejně jako u dalších podobných systémů se pro každou dvojici překládaných jazyků musí vytvořit slovníky a překladová pravidla. Vytvořit tato pravidla je velmi náročné a nákladné. Navíc jsou tato pravidla často použitelná pouze pro jeden jazykový pár.
 
 \section{Computer-aided translation}
-CAT, neboli computer-aided translation, či computer-assisted translation je zkratka označující systémy pro podporu překladu. Mohou to být jak desktopové, tak online aplikace. Často se liší stylem, jakým překladatele podporují. Jedním z druhů podpory může být nabídka předchozích překladů z paměti. Této paměti se říká překladová paměť, obsahuje přeložené úseky textu a překladatel si tuto paměť buduje buď sám, nebo může využít nějakou z kolektivních databází. Příkladem desktopové aplikace může být OmegaT. Ta je určena pro použití profesionálními překladateli, kterým nabízí úseky z překladové paměti. Hledaný úsek nemusí odpovídat aktuálně překládanému úseku na 100 procent, OmegaT implementuje algoritmus, který pozná i blízké shody.
+CAT, neboli computer-aided translation, či computer-assisted translation je zkratka označující systémy pro podporu překladu. Mohou to být jak desktopové, tak online aplikace. Často se liší stylem, jakým překlad podporují. Jedním z druhů podpory může být nabídka předchozích překladů z paměti. Této paměti se říká překladová paměť a obsahuje přeložené úseky textu. Překladatel si tuto paměť buduje buď sám, nebo může využít nějakou z kolektivních databází, jako je například databáze MyMemory \footnote{http://mymemory.translated.net/}. Aplikací pracujících s překladovou pamětí je mnoho. Příkladem jedné takové je OmegaT \footnote{http://www.omegat.org/}. Ta je určena pro použití profesionálními překladateli, kterým nabízí úseky z jejich překladové paměti. Hledaný úsek nemusí odpovídat aktuálně překládanému úseku na 100 procent, OmegaT totiž implementuje algoritmus, který pozná i blízké shody.
 
-Další ukázkou CAT pomůcky je Google Translator Toolkit (Nástroje pro překladatele). Tato internetová aplikace umožňuje překladateli nahrát si svou překladovou paměť, kterou pak může využít při překladu. Dále nástroj nabízí výsledky překladu z Google Translate, který dále může uživatel editovat.
+Další ukázkou CAT pomůcky je Google Translator Toolkit (česky Nástroje pro překladatele). Tato internetová aplikace umožňuje překladateli nahrát si svou překladovou paměť na server Google. Tuto paměť pak může používat při překladu spolu s výstupy z Google Translate. Google pravděpodobně využívá nahrané překladové paměti právě k vylepšení svého překladového systému.
 
-Zajímavým CAT systémem je caitra. Tato online pomůcka postavená na překladovém systému Moses nabízí překladateli několik možností překladu. Ten si pak může tyto návrhy použít a upravit. Pomocí systému caitra bylo experimentálně ověřeno, že CAT pomůcky mohou překladateli pomoci překlad zrychlovat a dokonce i zvyšovat jeho kvalitu.
+Zajímavým CAT systémem je caitra\parcite{koehn:2009}. Tato online pomůcka s pomocí překladového systému Moses\parcite{koehn-EtAl:2007:PosterDemo} nabízí překladateli několik návrhů překladu zadané věty. Překladatel si pak může mezi těmito návrhy vybírat a případně je upravovat. Pomocí systému caitra bylo experimentálně ověřeno, že CAT pomůcky mohou překladateli pomoci překlad nejen zrychlovat, ale i zvyšovat jeho kvalitu\parcite{koehn:haddow:2009}.
 
-\chapter{Moses}
+\chapter{Princip frázového překladu}
+Klíčovou částí implementovaného systému je překladový systém, který bude podporu při překladu generovat. Jak bylo zmíněno v minulé kapitole, existují v podstatě dva druhy překladových systémů --- statistické systémy založené na překladu frází a pravidlové systémy. Implementovaný CAT systém využívá pro generování nápovědy statistický frázový překladový systém. Zejména pro překlad z a do českého jazyka jsou totiž frázové systémy nejlepšími typy překladových systémů.
 
-V této kapitole bude popsána architektura frázových překladových systémů (anglicky PBMT --- phrase-based machine translation). Konkrétně bude popsána architektura systému Moses.
+Tato kapitola popisuje obecně architekturu statistických frázových překladových systémů (anglicky PBMT --- phrase-based machine translation). Zkráceně tyto systémy budeme označovat jako \clqq frázové systémy\crqq . Částem textu, které překladové systémy překládají budeme zjednodušeně říkat \clqq věty\crqq . Jako \clqq slova\crqq  budeme označovat jednotlivé části vět oddělené posloupností bílých znaků. Jako překladový pár se označuje dvojice jazyků. Zdrojový jazyk je jazyk zdrojového textu, tedy textu ze kterého překladový systém generuje překlad. Cílový jazyk je jazyk do kterého překladový systém překládá zdrojový text.
 
-\section{Princip frázového překladu}
+\section{Jazykový a překladový model}
+Obecně lze postup při překladu znázornit pomocí Obrázku \ref{phrase-based}. Frázový systém používá k hledání vstupní věty překladový a jazykový model. Překladový model zachycuje četnost překladů frází délky n. Tyto fráze jsou také označovány jako n-gramy. Překladový model lze získat z paralelních korpusů, tedy přeložených textů mezi zdrojovým a cílovým jazykem. Kvalita překladů je často úměrná velikosti paralelních korpusů, ze kterých překladový model generujeme. Tato závislost však není lineární, zdvojnásobení korpusu zlepší překladový model jen mírně. Velikost korpusu ze kterého se generuje překladový model je přesto jedním z nejdůležitějších faktorů, který ovlivňuje kvalitu celého frázového překladu.
 
-\subsection{Jazykový a překladový model}
-Obecně lze postup při překladu znázornit pomocí Obrázku \ref{phrase-based}. Moses používá k překladu vstupu na výstup překladový a jazykový model. Překladový model zachycuje četnost překladů frází délky n. Tyto fráze jsou také označovány jako n-gramy. Překladový model lze získat z paralelních korpusů, tedy přeložených textů mezi zdrojovým a cílovým jazykem. Kvalita překladů je často úměrná velikosti paralelních korpusů, ze kterých překladový model generujeme. Tato závislost však není lineární, zdvojnásobení korpusu zlepší překladový model jen o málo.
+Jazykový model zachycuje četnost výskytu frází v cílovém jazyce. Díky jazykovému modelu dokáže frázový systém při generování překladu alespoň částečně ohlídat, aby text v cílovém jazyce dával smysl. Kvalitní jazykový model lze oproti překladovému modelu získat poměrně snadno --- stačí získat velké množství textů pouze v cílovém jazyce.
 
-Jazykový model zachycuje četnost výskytu frází v cílovém jazyce. Díky jazykovému modelu dokáže Moses při generování překladu alespoň částečně ohlídat, aby text v cílovém jazyce dával smysl. Kvalitní jazykový model lze získat poměrně snadno --- stačí velké množství textů v cílovém jazyce.
+Frázový systém pak zjednodušeně řečeno hledá překlad tak, že každému slovu vstupní věty přiřazuje fráze z překladového modelu. Pomocí jazykového modelu se snaží kontrolovat plynulost a jazykovou korektnost přeložené věty. Hledání nejlepšího překladu je vlastně hledáním nejpravděpodobnější posloupnosti slov, která pokrývá všechna slova vstupní věty.
 
-Moses pak zjednodušeně hledá překlad tak, že každé části vstupu přiřazuje (vstupním frázím) fráze z překladového modelu. Pomocí jazykového modelu kontroluje alespoň částečně jazykovou korektnost výstupu. Hledání nejlepšího překladu je vlastně hledáním nejpravděpodobnější posloupnosti slov, která pokrývá všechny části vstupu. Možností překladu je obecně exponenciální množství. Přestože se u překladových systémů cení na prvním místě kvalita překladu, získání odpovědi v dostatečném čase je často také důležitou podmínkou. Rychlé hledání v překladových hypotézách je jednou z klíčových vlastností Mosese.
+%Rychlé hledání v překladových hypotézách je jednou z klíčových vlastností Mosese.
 
 \begin{figure}[t]
 \centerline{\mbox{\includegraphics[width=120mm]{pictures/phrase-based}}}
@@ -346,58 +355,106 @@ Moses pak zjednodušeně hledá překlad tak, že každé části vstupu přiřa
 
 \begin{figure}[t]
 \centerline{\mbox{\includegraphics[width=120mm]{pictures/lattice}}}
-\caption{Graf slov, ve kterém Moses hledá nejlepší překlad.}
+\caption{Graf slov, ve kterém frázový překladový systém hledá nejlepší překlad.}
 \label{lattice}
 \end{figure}
 
 \begin{figure}[t]
 \centerline{\mbox{\includegraphics[width=120mm]{pictures/lattice-selected}}}
-\caption{Moses rozšiřuje částečnou hypotézu.}
+\caption{Frázový překladový systém rozšiřuje částečnou hypotézu.}
 \label{lattice-selected}
 \end{figure}
 
 \begin{figure}[t]
 \centerline{\mbox{\includegraphics[width=100mm]{pictures/non-zero-start}}}
-\caption{Moses hledá hypotézu z neprázdné počáteční hypotézy.}
+\caption{Frázový překladový systém hledá hypotézu z neprázdné počáteční hypotézy.}
 \label{non-zero-start}
 \end{figure}
 
-\subsection{Hledání nejlepších hypotéz}
+\section{Hledání nejlepších hypotéz}
 
-Při generování překladu používá Moses strukturu, která se anglicky nazývá "lattice", neboli graf slov. Jeden takový graf je znázorněn na Obrázku \ref{lattice}. Jedná se vlastně o orientovaný graf. Jeho vrcholy jsou částečné hypotézy. Každá částečná hypotéza pokrývá nějakou část vstupu posloupností frází a má skóre určující relativní kvalitu překladu. Graf na obrázku popisuje překlad věty "das ist ein kleines haus" z němčiny do angličtiny. Pro názornost je tento graf velmi malý. Typicky by tento graf měl mnohem více vrcholů i hran.
+Při generování překladu používá frázový systém strukturu, která se anglicky nazývá \clqq lattice\crqq , neboli graf slov. Graf odpovídá jednotlivým krokům překladového algoritmu frázových systému. Vrcholy jsou částečné hypotézy. Každá částečná hypotéza pokrývá nějakou část vstupu posloupností frází a má skóre určující relativní kvalitu překladu. Graf se skládá z orientovaných cest. Hrany znázorňují jednotlivé kroky algoritmu, který postupně rozšiřuje částečné hypotézy. Každá taková cesta začíná v takzvané nulové hypotéze, která reprezentuje stav, kdy nebylo ještě nic přeloženo. Cesta končí ve vrcholu pro který už frázový systém nedokáže rozšířit danou hypotézu. To se může stát buď proto, že mu překladový model nedává žádné možnosti pokračování, nebo je hypotéza konečná a všechna slova jsou již přeložena. Graf slov je podobný stromové struktuře, jenže o strom se nejedná protože se některé cesty mohou spojit. K tomuto spojení dvou cest dochází právě tehdy, když jsou dvě rozdílné částečné hypotézy rozšířeny frázovým systémem do jedné společné hypotézy.
 
-Hrany v tomto grafu znázorňují jednotlivé kroky algoritmu známého pod názvem "beam search". Tento algoritmus implementovaný v Mosesovi se snaží postupně rozvíjet částečné hypotézy. Obrázek \ref{lattice-selected} opět popisuje překlad věty "das ist ein kleines haus" z němčiny do angličtiny. V tmavě označené vrcholu máme hypotézu, která pokrývá první dvě slova na vstupu, tedy "das ist" frází "this is". Algoritmus se pokusí tuto hypotézu rozvinout. Z překladového modelu získá dvě možnosti překladu fráze "ein kleines" --- buď jako "little house", nebo jako "small house". V dalších krocích tyto hypotézy dále rozvíjí podobným způsobem a na konci má dvě překladové hypotézy, které pokrývají všechna vstupní slova --- "this is a little house" a "this is a small house". Tyto hypotézy mají skóre, takže je lze seřadit a jako výstup nabídnout hypotézu s nejvyšším skóre. Pomocí tabulky částečných překladů dokáže Moses nabídnout i hypotézy, které při běhu algoritmu nezískaly nejvyšší skóre. Často se totiž hodí znát i jiné možnosti překladu, než jen tu, kterou Moses označil za nejlepší. Graf je podobný orientovanému stromu. Kořenem je počáteční prázdná hypotéza a listy jsou hypotézy, které už nejdou rozšířit. O strom se však nejedná kvůli možnosti spojení hypotéz. Často se může stát, že k jedné hypotéze dopracujeme pomocí více posloupností částečných hypotéz. Na Obrázku \ref{lattice-selected} to lze vidět na hypotéze "this is a little", která rozšiřuje dvě jiné hypotézy.
+Ukázka jednoho takového grafu slov je na Obrázku \ref{lattice}. Daný graf popisuje postup frázového systému při překladu věty \clqq das ist ein kleines haus\crqq  z němčiny do angličtiny. Pro názornost je tento graf velmi malý.
 
-Variant překladu může být obecně exponenciální množství. Pro rychlé hledání v těchto variantách implementuje Moses tzv. beam search algoritmus. Postup algoritmu při hledání zobrazuje Obrázek 2.2. Jedná se vlastně o orientovaný graf. Vrcholy grafu znázorňují částečné hypotézy. Každá taková částečná hypotéza pokrývá nějaká slova ze vstupu a má skóre, které určuje kvalitu hypotézy. Na začátku je překladu je prázdná hypotéza, která nepokrývá žádnou část vstupu. Na konci máme hypotézy které pokrývají celý vstup. Během překladu překladový systém postupně rozšiřuje exitující hypotézy o další fráze. Hypotéza s nejvyšším skóre je nabídnuta jako překlad na výstup. Pomocí tabulky překladovýchmožností dokáže Moses poskytnou i další hypotézy seřazené podle pravděpodobnosti.
+Obrázek \ref{lattice-selected} popisuje jeden krok překladového algoritmu. V tmavě označeném vrcholu se nachází částečná hypotéza, která pokrývá první dvě slova vstupní věty, tedy \clqq das ist\crqq  frází \clqq this is\crqq. Která slova jsou pokrytá znázorňuje vektor hvězdiček a podtržítek. Hvězdička na n-tém místě označuje že n-té slovo vstupní věty je již pokryto překladem. Algoritmus se pokusí tuto částečnou hypotézu rozvinout. Z překladového modelu získá dvě možnosti překladu fráze \clqq ein kleines\crqq  --- buď jako \clqq little house\crqq , nebo jako \clqq small house\crqq . Přidá tedy dva vrcholy a dvě hrany. V dalších krocích tyto hypotézy dále rozvíjí podobným způsobem až na konci získá dvě překladové hypotézy, které pokrývají všechna vstupní slova --- \clqq this is a little house\crqq  a \clqq this is a small house\crqq . Tyto hypotézy mají své skóre, takže je lze seřadit a jako výstup nabídnout hypotézu s nejvyšším skóre, což je hledaný nejlepší překlad. Frázové překladové systémy však umí poskytnout i takzvanou tabulku překladových možností Ta obsahuje i hypotézy s nižším skóre. To se hodí zejména proto, že metrika porovnávání dvou hypotéz není a nemůže být příliš exaktní. Překladatel často může použít pro překlad i hypotézu která nemá od překladového systému nejvyšší skóre.
 
-\section{Rozšíření Mosese}
+Variant překladu může být obecně exponenciální množství. Graf slov se pak rozroste do obřích rozměrů a i pro malý překladový model a krátkou větu může obsahovat tisíce hran a vrcholů. Důležitým parametrem každého frázového překladového systému je tedy mimo kvality samotného překladu také rychlost získání překladu. Klíčový je v tomto ohledu rychlý algoritmus na procházení grafem slov. Moderní frázové systémy implementují algoritmus, který se snaží tento graf co nejvíce zmenšit. Algoritmus nerozvíjí hypotézy, které mají relativně nízké skóre a které tedy nemají šanci být rozvinuty do hypotézy použitelné na výstupu. Tento princip zahazování nepravděpodobných hypotéz výrazně zmenšuje exponenciální prostor hypotéz a umožňuje tím nalezení překladu v přijatelném čase.
 
-Přireálném překladu se často může stát, že překladatel použije překlad, který neodpovídá žádné částečné hypotéze v Mosesovi. Jedním z cílů tohoto projektu je tedy i rozšíření Mosese tak, aby mohl generovat nápovědu z částečných hypotéz, které mu poskytne překladatel. Pokud zůstaneme u překladu věty "das ist ein kleines haus", může jeho překlad začít překladatel tak, že přeloží slovo "ein" frází "what a". Poté se chce překládat dále, ale neví jak, zeptá se tedy Mosese a řekne mu které části vstupu přeložil a jak je přeložil. Na Obrázku \ref{non-zero-start} je ukázka toho, jak by měl Moses na tento druh dotazu zareagovat. Místo prázdné hypotézy použije na začátku algoritmu hypotézu s parametry od uživatele.
+%Obvyklým výstupem překladu je nejlepší plná hypotéza. Tedy hypotéza, která pokrývá všechny slova ve vstupní větě a zárověň má ze všech takových hypotéz nejvyšší skóre. Někdy se ovšem hodí získat i hypotézy s nižším skóre. Takovýto výstup se nazývá tabulka překladových možností, kde jednotlivé hypotézy tvoří řádky tabulky, které jsou seřazené podle skóre.
 
+%Variant překladu může být obecně exponenciální množství. Pro rychlé hledání v těchto variantách implementuje Moses tzv. beam search algoritmus. Postup algoritmu při hledání zobrazuje Obrázek 2.2. Jedná se vlastně o orientovaný graf. Vrcholy grafu znázorňují částečné hypotézy. Každá taková částečná hypotéza pokrývá nějaká slova ze vstupu a má skóre, které určuje kvalitu hypotézy. Na začátku je překladu je prázdná hypotéza, která nepokrývá žádnou část vstupu. Na konci máme hypotézy které pokrývají celý vstup. Během překladu překladový systém postupně rozšiřuje exitující hypotézy o další fráze. Hypotéza s nejvyšším skóre je nabídnuta jako překlad na výstup. Pomocí tabulky překladovýchmožností dokáže Moses poskytnou i další hypotézy seřazené podle pravděpodobnosti.
 
+%algoritmu známého pod názvem "beam search"
+
+\chapter{Vývojová dokumentace}
+Cílem této práce tedy bylo implementovat CAT systém, který by překladatelům umožňoval snadněji vytvářet kvalitní překlady. Pro podporu překladu měl systém používat frázový překladový systém. Implementovaný CAT systém je postaven na architektuře klient---server, což je výhodné zejména kvůli výpočetním a paměťovým nárokům které jsou pro použití frázového překladu s velkými překladovými a jazykovými modely nutné. Architektura klient---server umožňuje používání jedné instance překladového systému více klienty. Každý klient tak nemusí na svůj systém složitě instalovat celý překladový systém s těmito velkými jazykovými a překladovými modely.
+
+\section{Překladový systém}
+
+Jako frázový překladový systém byl zvolen Moses. Jedná se o open source frázový překladový systém s licencí GNU LGPL. Mezi jeho silné vlastnosti patří rychlý algoritmus pro průchod prostorem částečných hypotéz a také podpora pro různé výstupní formáty, včetně tabulky překladových možností, což jsou vlastnosti, které jsme pro náš projekt potřebovali. Při rozhodování bylo také důležité, že komunita kolem Mosese je poměrně velká a vývoj stále aktivní.
+
+V implementovaném CAT systému jsme chtěli překladatelům nabízet dva druhy nápovědy. Prvním druh je tabulka překladových možností. Tuto nápovědu nabízí i caitra a Moses tento druh nápovědy nabízí jako jeden z druhů výstupu. Při implementaci bylo nutné tuto tabulku poskytnutou Mosesem upravit a odstranit z ní duplicity. Moses v tabulce překladových možností zobrazuje nejpravděpodobnější hypotézy překladu vstupní věty. Tyto hypotézy však mohou obsahovat stejné fráze pro překlad stejné části vstupní věty. V našem CAT systému tedy bylo nutné tyto duplicity odstranit, aby byla tabulka přehlednější a snadněji použitelná.
+
+Dalším typem nápovědy jsou \clqq návrhy překladu\crqq . Jedná se o podobný druh nápovědy, jakou poskytují některé internetové vyhledávače. Během psaní textu do vyhledávacího políčka je uživateli navrhnuto několik variant pokračování zadaného textu a ten si pak jednu z takovýchto nápověd může vybrat pomocí kursorových šipek. Vyhledávací systém tyto nápovědy generuje pomocí statistiky nejčastěji zadaných vyhledávacích dotazů. Uživateli tedy dostane nejpravděpodobnější varianty pokračování při zadávání vyhledávacího dotazu. V našem CAT systému jsme chtěli, aby návrhy překladu fungovaly podobně a dávali překladateli nápovědu jak nejpravděpodobněji pokračovat z dané fázi překladu dále. Tyto návrhy překladu měly být získány z překladového systému.
+
+Jednou z možností jak návrhy překladu získat by bylo využití tabulky překladových možností kterou generuje překladový systém. V této tabulce by se hledaly řádky se stejným prefixem jako má již přeložená část. Po odstranění prefixu v tomto řádku bychom získali návrhy překladu. Tento přístup má však dva problémy. Zaprvé může být celá tato tabulka dosti velká, během celého překladu věty by musela být v paměti a prohledávání v ní by bylo pomalé. Dalším problémem je, že se při překladu uživatel může dostane do fáze, která není zachycená nikde v grafu slov, tedy ani v tabulce překladových možností. I pro velké modely tato situace snadno nastane při použití cizího slova, které může být správným překladem, ale v překladovém modelu nemusí být nikde zachyceno. Tedy i kdyby byl částečný překlad věty správný, nemohl by náš CAT systém na základě výstupu z překladového systému nabídnout žádný návrh překladu.
+
+Řešení těchto problémů je v intenzivnějším využívání překladového systému. Toho se nemusíme ptát jen na začátku překladu každé věty, ale můžeme se ho ptát v každé fázi překladu. K tomu je nutné překladový systém přizpůsobit tak, aby nám poskytoval překlady specifičtěji zadaných vstupů. Ve 2. kapitole je popsán způsob jakým frázový překladový systém běžně generuje překlady. Důležité je, že začíná z prázdné hypotézy, která nepokrývá žádná slova vstupní věty. V našem CAT systému by se hodilo, kdyby překladový systém uměl generovat i z počáteční neprázdné hypotézy, tak jak to zobrazuje \ref{non-zero-start}. Tato neprázdná hypotéza by reflektovala aktuální stav překladu. Musí tedy obsahovat informaci o textu již přeloženého textu, ale také vektor určující která slova vstupní věty jsou již přeložena. Tabulka překladových možností, která by vznikla z této neprázdné hypotézy by pak obsahovala hledané návrhy překladu.
+
+Žádný z nám známých CAT systémů doposud nedisponuje podobnou funkcionalitou jakou jsou překladové návrhy. Její implementace byla jedním ze základních cílů tohoto projektu. Moses však generovat překlad z neprázdné hypotézy neuměl. Nejdříve tedy bylo nutné implementovat rozšíření Mosese, díky kterému by tento překladový systém dokázal na vstupu kromě zdrojového textu přijímat i informace o již přeložených částech vstupu a textu překladu. Informace o již přeložených částech je vektor, který určuje pro každé slovo, jestli se má překládat, nebo je již přeložené. Bez použití vektoru by se tento vstup dal simulovat tak, že by se ze vstupního řetězce pouze odstranila určitá slova. Pro překladový systém je důležité znát i text dosud přeložené části. Jazykový model překladového systému totiž porovnává sousední slova a pravděpodobnost sousedního výskytu slov se pak promítá do výsledného skóre překladové hypotézy. Text již přeložené části je tedy důležitý pro plynulejší navázání poskytovaných návrhů překladu.
+
+Rozšířili jsme tedy Mosese tak, aby přijímal speciální druh vstupu s těmito informacemi navíc. Tento vstupu začne Moses přijímat při spuštěném přepínači {\tt -continue-partial-translation}\footnote{http://www.statmt.org/moses/?n=Moses.AdvancedFeatures\#ntoc25}, nebo zkráceně {\tt -cpt}. Příklad jednoho takového požadavku na Mosese může vypadat takto:\\
+
+{\tt echo "that house ||| 10001 ||| das ist ein kleines haus" \textbackslash \\ | moses -f moses.ini -continue-partial-translation } \\
+
+Program moses získá na vstupu řetězec, který je pomocí sekvence \clqq {\tt |||}\crqq  rozdělen na tři části. První část je řetězec s textem hotového překladu. Druhou částí je vektor nul a jedniček, kde symbol \clqq 1\crqq  na místě n říká, že nté slovo vstupní věty bylo již přeloženo a symbol \clqq 0\crqq  říká, že ještě přeloženo nebylo. Poslední částí je samotná věta na překlad. Pokud na vstupu není řetězec, který by odpovídal tomuto formátu, intepretuje Moses tento vstup, přestože má zapnutý přepínač {\tt -continue-partial-translation} jako normální vstupní větu.
+
+\section{Server}
+
+Pro implementovaný CAT systém bylo dále potřeba vytvořit server, který by přijímal požadavky od klienta, následně je předal Mosesovi. Ten by je zpracoval a vrátil zpět. Server by tento výstup zpracoval a vrátil klientovi. Moses dokáže generovat různé druhy výstupů. Pro naše účely se nejlépe hodila tabulka překladových možností. Jeden řádek takového výstupu má tvar řetězce: \\
+
+{\tt 84 ||| it is small  ||| d: 0 lm: -20.8498 w: -3 tm: -3.21888 \\ ||| -24.0687 ||| 0-1=0-1 2=2 } \\
+
+Každý takový řádek odpovídá jedné hypotéze překladu. Pomocí sekvence \clqq {\tt |||}\crqq  je řádek rozdělen na pět částí. První částí je číslo požadavku. Moses postupně zpracovává věty k překladu ze vstupu a číslo požadavku je jediným způsobem jak rozlišit, kdy končí jedna jeho odpověď a začíná druhá. V druhé části je samotný text překladu této hypotézy. Třetí sloupec obsahuje informace o kvalitě překladu, z nichž se ve čtvrtém sloupci spočítá samotné skóre této hypotézy. Poslední sloupec obsahuje informace zarovnání, tedy která slova na vstupu jsou pokryta kterými frázemi na výstupu. V daném příkladě si můžeme představit, že se překládá věta \clqq das ist kleines\crqq  z němčiny do angličtiny a zarovnání nám říká, že hypotéza pokrývá slova \clqq das ist\crqq  frází \clqq it is\crqq  a slovo \clqq kleines\crqq  slovem \clqq small\crqq . Hypotézy jsou v tabulce řazeny od shora od nejvíce pravděpodobné hypotézy. Moses umožňuje omezit velikost vygenerované tabulky, tedy nastavit maximální množství řádků výstupu pro každý požadavek. Při vhodné velikosti tohoto omezení je tabulka dostatečně velká, tak aby obsahovala všechny použitelné nápovědy a zároveň není tak velká, aby nějak výrazně zvyšovala čas zpracování požadavku.
+
+Prvním druhem požadavku klienta na server je tedy dotaz na tabulku překladových možností. Serveru v tomto případě stačí znát jediný parametr --- text vstupní věty. Tento text server předá Mosesovi, který začne generovat překlad z prázdné hypotézy a na výstup vrátí serveru řádky tabulky překladových možností. Server musí tento výstup zpracovat, každý řádek nejprve rozdělit podle zarovnání na jednotlivé fráze, podívat se jestli fráze není duplicitní a pokud je, tak ji z výsledku odstranit. Takto zpracovaný výstup z Mosese může vrátit klientovi.
+
+Dalším druhem požadavku klienta na server je dotaz na návrh překladu. Server potřebuje od klienta kromě textu vstupní věty získat i již přeložený text a také vektor určující, která slova vstupního textu byla tímto překladem již pokryta. Tyto parametry předá Mosesovi ve formátu vstupu použitém při zapnutém přepínači {\tt -continue-partial-translation}. Moses opět vrátí tabulku překladových možností. Server v tabulce hledá návrhy překladu. Návrhy mají omezenou délku na maximální počet tří slov. Delší návrhy by byly pro překladatele nepřehledné a navíc by se mohlo stát, že by se jednotlivé návrhy lišily jen nepatrně, což by také vedlo k nepřehlednosti. Kromě délky je omezený i počet návrhů, tak aby se v nich ještě mohl překladatel orientovat. Při samotném generování návrhů z překladové tabulky si server vezme text překladu, zkrátí ho na maximálně tři slova, zkontroluje jestli už stejný návrh nevygeneroval, nebo jestli už nemá návrhů dostatek, a případně návrh použije. Jelikož je tabulka překladových možností seřazena podle skóre, jsou podle pravděpodobnosti seřazené i získané návrhy překladu.
+
+Server komunikuje s klientem pomocí protokolu HTTP. Každý požadavek na server je standardním požadavkem HTTP typu GET s příslušnými parametry. Těžší byl výběr formátu pro pro výstupní data. Variant a standardů existuje nespočet. Mezi nejznámější patří standard XML. Ten je však kritizován pro svojí těžkopádnost, kvůli které je i reprezentace malých dat relativně velká. Byl proto zvolen formát JSON, což je formát používaný ve skriptovacím jazyce JavaScript. Vyniká nejen svou stručností a vyjadřovací jednoduchostí, ale také tím, že s ním nativně umí pracovat všechny moderní prohlížeče\footnote{http://caniuse.com/\#feat=json}.
+
+Během vývoje serveru byla změněna celá platforma. Původně byl server vyvíjen celý v Javě. Implementovaný server má být vlastně jen tenkým a rychlým obalem nad překladovým systémem. A z tohoto důvodu byl nakonec server implementován v jazyce C/C++ který je pro účel implementace rychlého serveru vhodnější. Navíc v jazyce C existuje otevřená knihovna libmicrohttpd, která je vyvíjena jako součást projektu GNU. Tato knihovna umožňuje relativně snadno udělat z aplikace v C/C++ vícevláknový server HTTP. Jejím používáním tak odpadá nutnost složitého implementování tohoto protokolu.
+
+Dalším požadavkem na server bylo, dokázal spolupracovat s více instancemi překladového systému. Implementovaný CAT systém podporuje více jazykových párů. Pokud překladatel překládá například z angličtiny do češtiny a chce pokračovat překladem jiného dokumentu z němčiny do češtiny, nemusí se klient připojovat k jinému serveru. Server tedy umí spustit více instancí překladového systému a pomocí parametru v požadavku HTTP dokáže rozlišit, kterou instanci překladového systému má pro získání dané nápovědy použít.
+
+\section{Klient}
+Klientská část CAT systému má sloužit k samotné interakci s překladatelem. Jako platforma byl zvolen web, respektive webová aplikace. Webové aplikace mají oproti těm desktopovým několik výhod. Jednou z těch největších je dostupnost na všech platformách. Se správným prohlížečem může uživatel webovou aplikaci používat na mnoha operačních systémech. Navíc má uživatel vždy k dispozici nejnovější verzi používané aplikace. Webové aplikace mají také mnoho negativ, která jsou však postupem času eliminována. Mezi jednu z největších překážek vývoje webových aplikací patřila dlouhou dobu nutnost pro každou akci uživatele načítat celou webovou stránku znova. Tento problém vyřešila rodina technologií známá pod označením AJAX \footnote{z anglického Asynchronous JavaScript and XML}. Kromě skriptovacího jazyka JavaScript využívá AJAX především rozhraní XMLHttpRequest, pomocí kterého dokáže prohlížeč načíst data ze serveru bez nutnosti překreslení celé stránky.
+
+Na použití AJAXových požadavků stojí i implementace klientské části implementovaného CAT systému. Pomocí AJAXu jde v prohlížeči poskytovat překladovou nápovědu formou, která překladatele neobtěžuje. Problémem AJAXu je, že rozhraní XMLHttpRequest implementuje každý webový prohlížeč trochu jinak. Je tedy výhodné použít pro implementaci framework, který zavede nad tímto rozhraním určitou abstrakci. Programátor pak nemusí pro každý AJAXový požadavek řešit kompatibilitu v různých prohlížečích.
+
+Klientská část měla být původně napsána pomocí frameworku Google Web Toolkit\footnote{http://code.google.com/intl/cs/webtoolkit/}, který umožňuje psát aplikaci v Javě a ta je následně převedena do JavaScriptové aplikace spustitelné ve webovém prohlížeči. Google Web Toolkit však alespoň ve verzi 1.7 ještě neměl všechny potřebné vlastnosti, zejména co se týče uživatelského rozhraní. Další vlastností frameworku, kterou jsme pro náš systém považovali za nevýhodu je silná návaznost na technologie společnosti Google a její platformu Google App Engine\footnote{http://jquery.com/}.
+
+Klientská část byla tedy nakonec vyvinuta pomocí frameworku jQuery. Tento framework je vlastně JavaScriptová knihovna, která nejenže odstiňuje programátora od rozdílných implementací AJAXu v prohlížečích, ale obecně usnadňuje práci s JavaScriptem v prohlížeči. Hlavním úkolem klientské části je poskytovat překladateli nápovědy poskytované serverem tak, aby to co nejvíce zefektivnilo proces překladu. To s sebou obnáší i nutnost rozdělit zadaný text na menší části, typicky věty, které umožní při překladu pracovat v jednotlivých krocích. Dále je potřeba, aby byl implementovaný CAT systém schopen uložit překlad a nabídnout ho překladateli i při dalším otevření prohlížeče. Místo ukládání dokumentu na serveru bylo zvoleno lokální úložiště v prohlížeči pomocí metody Web Storage. Toto úložiště je implementováno ve většině moderních prohlížečů\footnote{http://caniuse.com/\#feat=namevalue-storage}.
 
 
 \chapter{Implementace serverové části}
 
 \section{Instalace}
 
-\subsection{Virtuální systém}
-
-Nejjednoduší variantou, jak na svém počítači zprovoznit AJAX-CAT je pomocí virtuálního stroje. Tento virtuální stroj s operačním systémem Ubuntu 10.04 se nachází na přiloženém CD. Pro jeho spuštění je potřeba mít nainstalovaný program Virtualbox\footnote{http://www.virtualbox.org/}, který je dostupný pro platformy Linux, Windows, Mac OSX i další. Pro spuštění virtuálního systému s AJAX-CAT je tedy nutné pomocí Virtualboxu spustit archiv ajax-cat.ova v adresáři virtualni\_stroj na přiloženém CD. Přihlašovací heslo do virtuálního systému je "ajax-cat".
-
 \subsection{Běžná instalace}
-Serverová část AJAX-CAT používá nástroje a knihovny, které jsou silně provázané s Linuxovým světem. Instalace na jiných platformách může být poměrně obtížná.
+Serverová část AJAX-CAT používá nástroje a knihovny, které jsou silně provázané s Linuxovým světem. Instalace na jiných platformách může být poměrně obtížná, ne-li nemožná. Tento instalační návod tedy předpokládá použití využití standardní Linuxové distribuce jako je například Ubuntu, nebo Debian. Také se předpokládá, že jsou dostupné všechny běžné Linuxové nástroje, jako je například BASH shell, nebo programy g++, či make.
 
 Nejprve je potřeba nainstalovat překladový systém Moses. Na oficiálních stránkách Mosese je poměrně obsáhlý návod k zprovoznění
-\footnote{http://www.statmt.org/moses\_steps.html}. S balíčkovacím systémem aptitude je jednodušší instalovat Mosese pomocí debian balíku z repozitáře Ubuntu NLP\footnote{http://cl.naist.jp/$\sim$eric-n/ubuntu-nlp/}. Dále je potřeba získat nějaký překladový a jazykový model. Součástí instalačních instrukcí pro Mosese je i návod, jak vytvořit tyto modely. Další možností je si nějaké jednoduché hotové modely stáhnout\footnote{http://www.statmt.org/moses/?n=Moses.SampleData}. Pro spuštění AJAX-CAT je potřeba mít pro Mosese vytvořený konfigurační soubor moses.ini, který obsahuje definice a parametry překladového a jazykového modelu.
+\footnote{http://www.statmt.org/moses\_steps.html}. S balíčkovacím systémem aptitude je jednodušší variantou instalovat Mosese pomocí debian balíku z repozitáře Ubuntu NLP\footnote{http://cl.naist.jp/$\sim$eric-n/ubuntu-nlp/}. Dále je potřeba získat nějaký překladový a jazykový model. Součástí instalačních instrukcí pro Mosese je i návod, jak vytvořit tyto modely. Další možností je si nějaké jednoduché hotové modely stáhnout\footnote{http://www.statmt.org/moses/?n=Moses.SampleData}. Pro spuštění CAT systému je potřeba mít pro Mosese vytvořený konfigurační soubor moses.ini, který obsahuje definice a parametry překladového a jazykového modelu.
 
-Dále je potřeba nainstalovat knihovnu libmicrohttpd\footnote{http://www.gnu.org/software/libmicrohttpd/}. Nejprve je potřeba stáhnout svn repozitář. Pomocí příkazů v BASH shellu to jde například takto: \\
+Dále je potřeba nainstalovat knihovnu libmicrohttpd\footnote{http://www.gnu.org/software/libmicrohttpd/}. Nejprve je potřeba stáhnout svn repozitář: \\
 
 
 {\tt svn checkout https://gnunet.org/svn/libmicrohttpd/ } \\
 
 
-Instalovat samotnou knihovnu pak lze pomocí posloupnosti příkazů: \\
+Instalovat samotnou knihovnu by pak mělo jít pomocí posloupnosti příkazů: \\
 
 
 {\tt autoreconf -fi
@@ -408,52 +465,39 @@ make
 
 make install} \\
 
-Podrobné informace o instalaci jsou v textovém souboru INSTALL.
+Podrobné informace o instalaci knihovny libmicrohttpd jsou v textovém souboru INSTALL v jejím repozitáři.
 
-Nyní by mělo být vše připraveno ke kompilaci samotného AJAX-CAT serveru. Z přiloženého CD stačí zkopírovat obsah adresáře ajax-cat-server na lokální disk. Před instalací je potřeba otevřít soubor Makefile a zadat do proměnné MICROHTTPD\_PATH cestu ke knihovně libmicrohttpd. Pokud byla tato knihovna nainstalována standardně, nemělo by být nutné něco měnit. Server se pak zkompiluje příkazem make. Po kompilaci by měl vzniknout spustitelný soubor ajax-cat-server. Ten si své parametry bere z konfiguračního souboru config.ini. Vzorem toho, jak by měl tento soubor vypadat je soubor server.ini.example. Ten se nachází v Příloze 1 této práce. Parametr [moses-path] určuje cestu k programu Moses. Parametr [translation-pair] definuje informace o každém překladovém páru. Na prvním řádku se uvádí název překladového páru, na dalším řádku je pak cesta ke konfiguračnímu souboru pro Mosese pro tento pár. Sekcí může být víc, AJAX-CAT server dokáže spustit pro více překladových párů více instancí Mosese. Dobrou konvencí je tyto soubory pojmenovávat podle normy ISO 639-1\footnote{http://www.loc.gov/standards/iso639-2/php/English\_list.php}. Například překladový pár pro překlad z češtiny do angličtiny je dobré pojmenovat "cs-en".
+Nyní by mělo být vše připraveno k sestavení samotného serveru. Z přiloženého CD stačí zkopírovat obsah adresáře ajax-cat-server na lokální disk. Před instalací je potřeba otevřít soubor Makefile a zadat do proměnné MICROHTTPD\_PATH cestu ke knihovně libmicrohttpd. Pokud byla tato knihovna nainstalována standardně, nemělo by být nutné nic měnit. Server se pak zkompiluje příkazem make. Po kompilaci by měl vzniknout spustitelný soubor ajax-cat-server. Ten si své parametry bere z konfiguračního souboru config.ini. Vzorem toho, jak by měl tento soubor vypadat je soubor server.ini.example. Ten se nachází v Příloze 1 této práce. Parametr [moses-path] určuje cestu k programu Moses. Parametr [translation-pair] definuje informace o každém překladovém páru. Na prvním řádku se uvádí název překladového páru, na dalším řádku je pak cesta ke konfiguračnímu souboru pro Mosese pro tento pár. Sekcí může být víc, server dokáže spustit pro více překladových párů více instancí Mosese. Dobrou konvencí je tyto soubory pojmenovávat podle normy ISO 639-1\footnote{http://www.loc.gov/standards/iso639-2/php/English\_list.php}. Například překladový pár pro překlad z češtiny do angličtiny by se měl jmenovat \clqq cs-en\crqq .
 
-Po nastavení cest v konfiguračním souboru se již může spustit samotný server. Stačí spustit program ajax-cat-server. V terminálu by se měly objevit informace o startování serveru. Server je nastartován v okamžiku, kdy se pro všechny překladové páry "x-y" v terminálu objeví zpráva "Thread x-y ready". Potom lze serveru posílat HTTP GET zprávy na port 8888. Funkčnost serveru lze otestovat po otevření prohlížeče a zadání adresy: \\
+Po nastavení cest v konfiguračním souboru se již může spustit samotný server. Stačí spustit program ajax-cat-server. V terminálu by se měly objevit informace o startování serveru. Server je nastartován v okamžiku, kdy se pro všechny překladové páry \clqq x-y\crqq  v terminálu objeví zpráva \clqq Thread x-y ready\crqq . Potom lze serveru posílat HTTP GET zprávy na port 8888. Funkčnost serveru lze otestovat po otevření prohlížeče a zadání adresy: \\
 
 {\tt http://localhost:8888/simple?pair=x-y\&q=kleines\%20haus} \\
 
-Server by měl vrátit řetězec s překladem věty "das ist ein kleines haus" pomocí překladového páru "x-y". Server se z terminálu ukončí stisknutím klávesy Enter.
+Server by měl vrátit řetězec s překladem věty \clqq kleines haus\crqq  pomocí překladového páru \clqq x-y\crqq . Běh serveru se z terminálu ukončí stisknutím klávesy Enter.
 
-\section{Rozšíření Mosese}
-%\parcite{koehn:haddow:2009}
+\subsection{Virtuální systém}
 
-Moses se z příkazové řádky spouští typicky tímto způsobem: \\
+Nejjednoduší variantou, jak na svém počítači zprovoznit server je pomocí virtuálního stroje. Tento virtuální stroj s operačním systémem Ubuntu 10.04 se nachází na přiloženém CD. Pro jeho spuštění je potřeba mít nainstalovaný program Virtualbox\footnote{http://www.virtualbox.org/}, který je dostupný pro platformy Linux, Windows, Mac OSX i další. Pro spuštění virtuálního systému s již nainstalovaným serverem je tedy nutné pomocí Virtualboxu spustit archiv ajax-cat.ova v adresáři virtualni\_stroj na přiloženém CD. Přihlašovací heslo do virtuálního systému je \clqq ajax-cat\crqq . Po přihlášení stačí v terminálu spustit soubor {\tt ajax-cat-server} v adresáři {\tt ~/ajax-cat-server}
 
-{\tt echo "das ist ein kleines haus" | moses -f moses.ini } \\
-
-Jedním z nutných rozšíření Mosese bylo implementovat rozšíření, které by Mosesovi umožnilo pokračovat v překladu od částečně přeložené věty. Toto rozšíření se aktivuje pomocí přepínače {\tt -continue-partial-translation}\footnote{http://www.statmt.org/moses/?n=Moses.AdvancedFeatures\#ntoc25}, nebo zkráceně {\tt -cpt}. Pokud je tento přepínač zapnut, očekává Moses speciální druh vstupu, který je pomocí sekvence "{\tt |||}" rozdělen na tři části. Příkladem použití může být následující příkaz: \\
-
-{\tt echo "that house ||| 10001 ||| das ist ein kleines haus" \textbackslash \\ | moses -f moses.ini -continue-partial-translation } \\
-
-První částí vstupu je již přeložený řetězec. Druhou částí řetězec nul a jedniček určuje, které části vstupu (typicky slova) jsou pokryta. V tomto příkladě to znamená, že z překládáné věty "das ist ein kleines haus" je překladem "that house" pokryto první slovo "das" a poslední slovo "haus". S touto informací pak Moses dokáže pracovat a generovat nápovědy jak pokračovat v překladu.
 
 \section{Implementační detaily}
 
-!!!!DEFINOVAT CO ZNAMENA SLOVO V MOSESOVI!!!!
+Celá serverová část implementovaného CAT systému je vlastně tenkou vrstvou napsanou v jazyce C/C++ propojující překladový systém Moses s HTTP serverem postaveným nad knihovnou libmicrohttpd. Po spuštění začne server obsluhovat HTTP požadavky na portu číslo 8888. Tato část popisuje všechny druhy dotazů, které může server obdržet.
 
 
-Celá serverová část AJAX-CAT je vlastně tenkou vrstvou napsanou v jazyce C/C++ propojující překladový systém Moses s HTTP serverem libmicrohttpd.
-
-\subsection{Typy dotazů}
-Po spuštění začne server přijímat HTTP požadavky na portu 8888. Požadavky jsou 4 druhů.
-
-\subsubsection{Simple}
+\subsection{Požadavek simple}
 Pomocí požadavku simple lze získat jako odpověď nejlepší překlad věty v jednoduché textové formě. Požadavek má tvar: \\
 
 {\tt http://localhost:8888/simple?pair=de-en\&q=das+ist } \\
 
-Parametr {\tt pair } určuje jméno překladového páru, který má server použít. Parametr {\tt q } je zdrojový text zakódovaný do standartního HTTP kódování.
+Parametr {\tt pair } určuje jméno překladového páru, který má server použít. Parametr {\tt q } je zdrojový text zakódovaný do standardního kódování HTTP.
 
-\subsubsection{Table}
-Požadavek table vrací překladovou tabulku pro zadaný text. Požadavek má tvar: \\
+\subsection{Požadavek table}
+Na požadavek table vrací překladovou tabulku pro zadaný text. Požadavek má tvar: \\
 
 {\tt http://localhost:8888/table?pair=de-en\&q=das+ist } \\
 
-Parametry mají stejný význam jako u předchozího požadavku. Server vrací překladovou tabulku ve standartním javascriptovém JSON formátu. Část {\tt source } je polem slov ve zdrojovém textu. Část {\tt target } je pole řádků tabulky. Každý řádek obsahuje frázi. Každá fráze má kromě textu také část určující kolik slov ve zdrojovém textu pokrývá. Příklad odpovědi na výše uvedený požadavek: \\
+Parametry mají stejný význam jako u předchozího požadavku. Server vrací překladovou tabulku ve formátu JSON. Část {\tt source } je polem slov ve zdrojovém textu. Část {\tt target } je pole řádků tabulky. Každý řádek obsahuje frázi. Každá fráze má kromě textu (parametr "t") také část určující kolik slov ve zdrojovém textu pokrývá (parametr "s"). Příklad odpovědi na výše uvedený požadavek: \\
 
 {\tt \{"source":["das","ist"],
 "target":[ 
@@ -470,35 +514,35 @@ Parametry mají stejný význam jako u předchozího požadavku. Server vrací p
 
 }
 
-Překládá se tedy "das ist" v překladovém páru "de-en". Odpověď říká, že nejlepším nalezeným překladem je přeložení celého "das ist" frází "this is", druhou variantou je překlad "it is" a v posledním řádku je nabídnut překlad slova "das" jako "the" a překlad slova "ist" jako "is".
+Překládá se tedy \clqq das ist\crqq  v překladovém páru \clqq de-en\crqq . Odpověď říká, že nejlepším nalezeným překladem je přeložení celého \clqq das ist\crqq  frází \clqq this is\crqq , druhou variantou je překlad \clqq it is\crqq  a v posledním řádku je nabídnut překlad slova \clqq das\crqq  jako \clqq the\crqq  a překlad slova \clqq ist\crqq  jako \crqq is\crqq .
 
-\subsubsection{Suggestion}
-Důležitým požadavkem je suggestion. Server se lze tímto dotazem zeptat na pokračování při překladu. Kromě parametrů shodných s předchozími požadavky má navíc parametry {\tt translated} a {\tt covered}: \\
+\subsection{Požadavek suggestion}
+Důležitým požadavkem je suggestion, ten jako odpověď posílá návrhy překladu. Kromě parametrů shodných s předchozími požadavky má navíc parametry {\tt translated} a {\tt covered}: \\
 
 {\tt http://localhost:8888/suggestion?pair=de-en \\ \&translated=a+small\&covered=00110\&q=das+ist+ein+kleines+haus } \\
 
-Parametr {\tt translated} je text již přeložené části. Parametr {\tt covered} je vektor jedniček a nul označující již přeložené části ve zdrojovém textu. Odpověď serveru je opět ve formátu JSON a v poli {\tt suggestions} znázorňuje nejpravděpodobnější možnosti pokračování překladu. Těchto nápověd je maximálně 5 a každá má délku maximálně 3 slova. Příkladem nápovědy na výše uvedený dotaz je: \\
+Parametr {\tt translated} je text již přeložené části. Parametr {\tt covered} je vektor jedniček a nul označující již přeložené části ve zdrojovém textu. Odpověď serveru je opět ve formátu JSON a v poli {\tt suggestions} vrací nejpravděpodobnější návrhy pokračování překladu. Návrhů je maximálně 5 a každý má délku maximálně 3 slova. Příklad odpovědi serveru na výše uvedený dotaz může být následující: \\
 
 {\tt \{"suggestions":["is the house","the house is","is this house"]\} }
 
-\subsubsection{Raw}
-Požadavek raw vrací nezpracovaný výstup z Mosese a je vhodný pro ladící účely. Formát je podobný jako v předchozích případech: \\
+\subsection{Požadavek raw}
+Požadavek raw vrací tabulku překladových možností tak, jak ji vrací serveru Moses. Tento dotaz je vhodný především pro ladící účely. Formát dotazu je podobný jako v předchozích případech: \\
 
 {\tt http://localhost:8888/raw?pair=de-en\&q=das+ist } \\
 
-\subsection{Přehled souborů}
+\section{Přehled souborů}
 Složka se serverovou částí obsahuje soubory Makefile, server.ini, server.ini.example a pokud je projekt zkompilovaný, tak i spustitelný soubor ajax-cat-server. Makefile je soubor s pokyny pro sestavovací program make. Soubor server.ini je inicializační soubor s informacemi o umístění Mosese a umístěním a jmény jednotlivých překladových párů. Ukázkou, jak by měl konfigurační soubor vypadat je soubor server.ini.example. Po prvním spuštění programu vznikne tmp, kde se nacházejí pojmenované roury, které slouží ke komunikaci s Mosesem. Kód serveru se nachází v souboru server.cpp ve složce src.
 
-\subsection{Funkce a třídy}
+\section{Funkce a třídy}
 
-\subsubsection{Funkce main}
+\subsection{Funkce main}
 Spouští celý server. Z inicializačního souboru zjistí, kde se nachází Moses a jaké překladové páry má spustit. Funkcí MHD\_start\_daemon spustí libmicrohttpd server na portu 8888 a řekne mu, aby požadavky zpracovával funkcí answer\_to\_connection. Dále spouští kontrolní vlákno s funkcí control\_thread, která jednou za čas kontroluje, jestli jsou všechny procesy s Mosesem stále aktivní.
 
-\subsubsection{Funkce answer\_to\_connection}
+\subsection{Funkce answer\_to\_connection}
 Tato funkce je volána při každém dotazu na server. Načte všechny přípustné parametry, který dotaz může mít a rozhodne, který jazykový pár bude požadovat a jaký tvar odpovědi je žádán. V případě správného dotazu vrátí funkce kód 200 správné HTTP odpovědi a zařadí odpověď do fronty odpovědí. Tuto frontu obsluhuje knihovna libmicrohttpd, která data vrací správnému tazateli.
 
-\subsubsection{Třída MosesPair}
-Tato třída reprezentuje jeden jazykový pár. V konstruktoru dostane své jméno a cestu ke konfiguračnímu souboru pro Mosese. Tento konfigurační pár určuje jeden jazykový pár. Dále konstruktor vytvoří pojmenovanou rouru, kterou bude získávat výstup z Mosese a spustí Mosese s příslušným konfiguračním souborem: \\
+\subsection{Třída MosesPair}
+Tato třída reprezentuje jeden jazykový pár. V konstruktoru dostane své jméno a cestu ke konfiguračnímu souboru pro Mosese. Tento konfigurační pár určuje jeden překladový pár. Dále konstruktor vytvoří pojmenovanou rouru, kterou bude získávat výstup z Mosese, a spustí Mosese s příslušným konfiguračním souborem: \\
 
 {\tt moses -f moses.ini
 
@@ -510,55 +554,50 @@ Tato třída reprezentuje jeden jazykový pár. V konstruktoru dostane své jmé
 
 > tmp/en-de\_out.fifo 2>/dev/null } \\
 
-Parametry říkají Mosesovi, aby na výstup vygeneroval 100 různých překladů vstupního textu. Konstruktor třídy pak svou instanci zařadí do mapy {\tt server}, kterou používá funkce answer\_to\_connection k rozlišení toho, který jazykový pár má použít k získání odpovědi. Pak se ještě sám zařadí do seznamu {\tt serversOrder}, který využívá následně spuštěné vlákno k určení, který jazykový pár ho spustil. Nakonec se tedy zavolá vlákno spouštějící statickou metodu {\tt reader}.
+Parametry říkají Mosesovi, aby na výstup vygeneroval tabulku překladových možností maximální velikosti 100 řádků. Konstruktor třídy pak svou instanci zařadí do mapy {\tt server}, kterou používá funkce answer\_to\_connection k rozlišení toho, který jazykový pár má použít k získání odpovědi. Pak se ještě sám zařadí do seznamu {\tt serversOrder}, který využívá následně spuštěné vlákno k určení, který jazykový pár ho spustil. Nakonec spustí nové vlákno ovládané statickou metodou {\tt reader}.
 
-Součástí třídy je fronta požadavků typu Request. Instance třídy MosesPair přijímají požadavky od funkce answer\_to\_connection pomocí metody get\_translation. Ta vezme požadavek a zařadí ho do své fronty. Dále procesu s Mosesem pošle dva požadavky na překlad. Prvním požadavkem je skutečná věta, kterou chce přeložit, druhým následujícím požadavkem je "nesmyslný řetězec". Výstup z Mosese je proud očíslovaných řádků a tento "nesmyslný řetězec" slouží k odlišení konce vstupu, který požadujeme. Aby bylo přidání do fronty i předání dotazů z Mosese bezpečné, je při těchto operacích prováděno zamykání mutexů queue\_mutex a moses\_mutex. Funkce pak vlastní požadavek zamkne a čeká, dokud nebude odemčen vláknem, které čte výstupy z Mosese.
+Součástí třídy je fronta požadavků typu Request. Instance třídy MosesPair přijímají požadavky od funkce answer\_to\_connection pomocí metody get\_translation. Ta vezme požadavek a zařadí ho do své fronty. Dále procesu s Mosesem pošle dva požadavky na překlad. Prvním požadavkem je skutečná věta, kterou chce přeložit, druhým následujícím požadavkem je \clqq nesmyslný řetězec\crqq . Díky tomuto \clqq nesmyslnému řetězci\crqq  může server z výstupu který mu poskytuje Moses poznat, kdy končí jedna a začíná další odpověď. Aby bylo přidání do fronty i předání dotazů z Mosese bezpečné (k jedné instanci Mosese se může snažit přistoupit v jeden okamžik více požadavků), je při těchto operacích prováděno zamykání mutexů queue\_mutex a moses\_mutex. Po předání dotazu do Mosese funkce požadavek zamkne a čeká, dokud nebude odemčen vláknem, které čte výstupy z Mosese.
 
-Tímto vláknem je právě vlákno, které spouští konstruktor třídy MosesPair na konci svého běhu. Vlákno je tedy obsluhované statickou metodu {\tt reader}. Tato metoda se nejdříve připojí k pojmenované rouře do které posílá Moses svůj výstup a postupně ji čte. Výstupem je tedy řádek s pořadovým číslem dotazu na Mosese. Vlákno tedy nejprve pomocí třídy Line rozdělí řádek na části a získá toto pořadové číslo. Z pořadového čísla na předchozím řádku dokáže rozlišit situaci, kdy Moses začíná vracet odpověď na další požadavek. Jelikož je při požadavcích na Mosese vkládán i "nesmyslný řetězec", jsou zajímavé pouze odpovědi se sudým pořadovým číslem. Pro každou takovou odpověď vezme metoda jeden požadavek z fronty. Díky tomu, že Moses odpovídá na požadavky lineárně, odpovídá výstup z Mosese požadavku na začátku fronty (prvek, který je ve frontě nejdéle). Tomuto požadavku předává řádky z Mosese. Pak uvolní zámek v požadavku, což umožní, aby metoda get\_translation mohla vrátit výsledek.
+Tímto vláknem je právě vlákno, které spouští konstruktor třídy MosesPair na konci svého běhu a reprezentuje ho metoda {\tt reader}. Tato metoda se připojí k pojmenované rouře do které posílá Moses svůj výstup a postupně ji čte. Moses do pojmenované roury posílá postupně tabulku překladových možností. Metoda přečte řádek z roury, ten nejprve pomocí třídy Line rozdělí na jednotlivé části a získá pořadové číslo požadavku. Z pořadového čísla na předchozím řádku tak dokáže rozlišit situaci, kdy Moses začíná vracet odpověď na další požadavek. Jelikož je do požadavků na Mosese vkládán i \clqq nesmyslný řetězec\crqq , jsou zajímavé pouze odpovědi se sudými čísly požadavku. Pro každou takovou odpověď vezme metoda požadavek z fronty a začne mu předávat ke zpracování jednotlivé řádky výstupu. Díky tomu, že Moses dává na výstup požadavky ve stejném pořadí v jakém je obdržel, jsou řádky vraceny správnému požadavku. Po předání posledního řádku výstupu z Mosese pak uvolní v požadavku zámek, což umožní, aby metoda get\_translation mohla vrátit odpověď na dotaz klientovi.
 
-\subsubsection{Třída Request}
+\subsection{Třída Request}
 Od této třídy dědí všechny ostatní druhy požadavků na server. Semafor {\tt sem} se pomocí metody {\tt lock} zamyká na začátku zpracování požadavku a odemyká se pomocí metody {\tt unlock} na konci zpracování. Každý požadavek má dvě metody --- {\tt process\_line} a {\tt get\_result}.
 
-Metoda {\tt process\_line} zpracovává řádek výstupu z Mosese. Ten má typicky tvar: \\
+Metoda {\tt process\_line} dostává postupně jednotlivé řádky tabulky překladových možností a podle druhu dotazu tento řádek zpracovává. Řádek tabulky překladových možností je reprezentován třídou {\tt Line}, která nabízí základní metody pro parsování každé překladové možnosti.
 
-{\tt 84 ||| it is small  ||| d: 0 lm: -20.8498 w: -3 tm: -3.21888 ||| -24.0687 ||| 0-1=0-1 2=2 } \\
+Metoda {\tt get\_result} je volána po přijetí posledního řádku z tabulky překladových možností a generuje text, který je vrácen klientovi jako odpověď na dotaz.
 
-Tento řádek reprezentuje jeden z překladů věty Mosesem. Řádek je rozdělen na pět částí rozdělených řetězcem {\tt |||}. V první je číslo požadavku, v druhé je řetězec s překladem, ve čtvrté je skóre překladů vypočtené z parametrů ve třetí části. Poslední část obsahuje informace o zarovnání, tedy o tom, která část výstupního řatězce patří ke které části vstupního řetězce. Metoda {\tt process\_line} si bere parametr třídy {\tt Line}. Tato třída reprezentuje právě jeden řádek výstupu z Mosese a poskytuje metody k získání jednotlivých částí výstupu.
+\subsection{Třída RawRequest}
+Tato třída je potomkem třídy {\tt Request}. Odpovídá požadavku raw, tedy neprovádí žádné zpracování a metodou {\tt get\_result} vrací tabulku překladových možností ve stejném formátu jako Moses.
 
-Metoda {\tt get\_result} zpracovává tyto řádky a výsledek vrací jako řetězec, který se vrátí uživateli jako odpověď na požadavek.
+\subsection{Třída SimpleRequest}
+Tato třída je potomkem třídy {\tt Request}. Odpovídá požadavku simple. Zpracovává pouze první řádek tabulky překladových možností ze které získá samotný text překladu.
 
-\subsubsection{Třída RawRequest}
-Tato třída je potomkem třídy {\tt Request}. Odpovídá požadavku raw a metodou {\tt get\_result} vrací textová data ve stejné formě, jakou získává od Mosese.
+\subsection{Třída TableRequest}
+Tato třída je potomkem třídy {\tt Request}. Odpovídá požadavku table. Tento druh požadavku odstraňuje duplicitní fráze z tabulky překladových možností a po převedení do formátu JSON vrací tabulku klientovi.
 
-\subsubsection{Třída SimpleRequest}
-Tato třída je potomkem třídy {\tt Request}. Odpovídá požadavku simple. Zpracovává pouze první řádek, který od Mosese získá a vrací řetězec s překladem.
+Tabulka je reprezentována třídou {\tt Table}. Na začátku každého zpracování je vytvořena nová instance třídy {\tt Table}. Pokaždé když požadavek obdrží prostřednictvím metody {\tt process\_line} jeden řádek překladových možností, rozdělí ho na jednotlivé fráze reprezentované třídou {\tt Phrase}, které se pak snaží umístit do tabulky. Umístění se nepovede pokud v tabulce již v odpovídajících sloupcích stejná fráze byla, nebo pokud jsou odpovídající sloupce zaplněné jinými frázemi. Tabulka má totiž kvůli přehlednosti pouze omezené množství řádků. 
 
-\subsubsection{Třída TableRequest}
-TODO: vic rozepsat co delaji funkce.
+Na závěr zpracování požadavku je tabulka pomocí metody {\tt get\_result\_table} převedena do JSON formátu a vrácena klientovi.
 
-Tato třída je potomkem třídy {\tt Request}. Odpovídá požadavku table, generuje tedy tabulku překladových možností. Tato tabulka je reprezentovaná třídou {\tt Table}. Má pět řádků a sloupců má stejně jako je slov ve zdrojovém textu. Každý řádek je pomocí informací o zarovnání rozdělen na fráze a každá fráze je přidělena do příslušných sloupců překladové fráze. Může se však stát, že stejná fráze pokrývající stejná slova vstupu (a ležící tedy ve stejných sloupcích tabulky) už v tabulce je. V tom případě se fráze zahodí, stejně jako v případě, že je v daných sloupích tabulka již plná. Jednotlivé fráze reprezentuje třída {\tt Phrase}.
+\subsection{Třída SuggestionRequest}
+Tato třída je potomkem třídy {\tt Request}. Odpovídá požadavku suggestion a poskytuje tedy návrhy překladu. Při zpracování řádku tabulky překladových možností získá pomocí statické metody {\tt get\_suffix} řetězec se třemi prvními slovy návrhu. Tento řetězec se poté snaží přidat do pole {\tt results} a kontroluje, zda v něm již stejná fráze není. Maximální počet návrhů je pro přehlednost omezen.
 
-V metodě {\tt get\_result } je pak tabulka převáděna do JSON formátu.
-
-\subsubsection{Třída SuggestionRequest}
-TODO: Ujasnit jak funguje konstruktor, vic rozepsat co delaji funkce.
-
-Tato třída je potomkem třídy {\tt Request}. Odpovídá požadavku suggestion. Při zpracování řádku z Mosese pomocí statické metody {\tt get\_suffix} získá řetězec se třemi prvními slovy překladu, tedy nejbližší nápovědou. Tento řetězec se poté snaží přidat do pole {\tt results} a kontroluje, aby v něm nebyly duplicity a aby obsahovalo maximálně 5 prvků.
-
-\subsubsection{Ostatní funkce}
+\subsection{Ostatní funkce a třídy}
+Funkce {\tt explode} vezme řetězec a s použitím zadaného znaku jako oddělovače rozdělí řetězec na části, které pak vrátí v datovém typu {\tt vector}. Funkce {\tt jsonify} převádí řetězec pro použití dle standardu JSON. Funkce {\tt clear\_input} odstraňuje z řetězce znaky nových řádků. Tyto znaky totiž používá Moses k oddělení jednotlivých vstupů. Třída {\tt Logger} se používá k logování dotazů a jiných informací. Tento log vypisuje server na standardní výstup.
 
 \chapter{Implementace klientské části}
 
-Klientská část AJAX-CAT je webová aplikace, která využívá nových možností prohlížečů, které nyní umožňují komunikovat se serverem pomocí AJAX požadavků, nebo ukládání lokálních dat v klientském počítači pomocí technologie Web Storage z rodiny technologií HTML5. 
+Klientská část CAT systému je webová aplikace využívající moderní technologie jako AJAX či WebStorage.
 
 \section{Instalace}
-Pro spuštění aplikace je potřeba mít nainstalován moderní webový prohlížeč. Nejdůležitějším požadavkem je, aby prohlížeč podporoval technologii lokálního uložiště Web Storage. Toto uložiště podporují všechny moderní browsery\footnote{http://caniuse.com/\#feat=namevalue-storage}. Dále je potřeba mít nainstalovaný webový server Apache s podporou pro PHP skripty.
+Pro spuštění aplikace je potřeba mít nainstalován moderní webový prohlížeč. Nejdůležitějším požadavkem na prohlížeč je, aby podporoval technologii lokálního úložiště Web Storage. Toto úložiště podporují všechny moderní browsery\footnote{http://caniuse.com/\#feat=namevalue-storage}. Dále je potřeba mít nainstalovaný webový server Apache s podporou pro PHP skripty.
 
 Samotná instalace je pak snadná, stačí překopírovat složku ajax-cat-client do složky, kterou používá Apache pro spouštěné skripty. Na linuxových systémech je to typicky složka {\tt /var/www}.
 
 Nyní stačí v prohlížeči zadat adresu {\tt http://localhost/ajax-cat/} a měla by se objevit úvodní stránka klientské části AJAX-CAT.
 
-Potom je ještě pořeba propojit klientskou část se serverovou. Nejprve je potřeba upravit soubor {\tt libraries/pairs.js }. V něm je potřeba upravit pole {\tt pairs} tak, aby položky code odpovídali názvům překladových dvojic na serverové části. Položka description slouží jako název překladového páru prezentovaný uživateli. Pokud máme jen jeden překladový pár s kódem "cs-en" a názvem "czech-english", může vypadat definice proměnné {\tt pairs} takto: \\
+Potom je ještě pořeba propojit klientskou část se serverovou. Nejprve je potřeba upravit soubor {\tt libraries/pairs.js }. V něm je potřeba upravit pole {\tt pairs} tak, aby položky code odpovídali názvům překladových dvojic na serverové části. Položka description slouží jako název překladového páru prezentovaný uživateli. Pokud máme jen jeden překladový pár s kódem \clqq cs-en\crqq  a názvem \clqq czech-english\crqq , může vypadat definice proměnné {\tt pairs} takto: \\
 
 {\tt var pairs =
 
@@ -570,22 +609,23 @@ Potom je ještě pořeba propojit klientskou část se serverovou. Nejprve je po
 
 \}]; } \\
 
-Dále je potřeba dát klientské části HTTP adresu serverové části. Pkud server běží na localhostu a portu číslo 8888, není potřeba nic měnit. Jinake je potřeba upravit poslední řádky PHP skriptů {\tt proxy/suggestion.php} a {\tt proxy/table.php}.
+Dále je potřeba dát klientské části HTTP adresu serverové části. Pokud server běží na localhostu a portu číslo 8888, není potřeba nic měnit. Jinak je potřeba upravit poslední řádky PHP skriptů {\tt proxy/suggestion.php} a {\tt proxy/table.php}.
 
 Při použití virtuálního hosta není potřeba nic instalovat, stačí zadat výše uvedenou adresu do prohlížeče.
 
 \section{Návod k použití}
-Na titulní stránce se kromě záhlaví a zápatí objeví i sekce "Your translations" a "New translation". V sekci "Your translations" se nachází seznam překládaných dokumentů, který je při prvním použití aplikace prázdný. Překlad nového dokumentu se zahájí vložením zdrojového textu do textové oblasti v sekci "New Translation" a stisknutím tlačítka "Start translating". Proběhne přesměrování na stránku {\tt document.html} s překládaným dokumentem. Každý dokument má svůj šestnáctimístný hash kód, který se nachází v hashové části URL dokumentu.
+Na titulní stránce se kromě záhlaví a zápatí objeví i sekce \clqq Your translations\crqq  a \clqq New translation\crqq . V sekci \clqq Your translations\crqq  se nachází seznam překládaných dokumentů, který je při prvním použití aplikace prázdný. Překlad nového dokumentu se zahájí vložením zdrojového textu do textové oblasti v sekci \clqq New Translation\crqq  a stisknutím tlačítka \clqq Start translating\crqq . Proběhne přesměrování na stránku {\tt document.html} s překládaným dokumentem. Každý dokument má svůj šestnáctimístný hash kód, který se nachází v hashové části URL dokumentu a slouží jako identifikátor dokumentu.
 
-V záhlaví dokumentu se nachází jeho název a překladový pár který je použit k podpoře překladu. Název i překladový pár jdou změnit v nabídce po kliknutí na tlačítko "Settings". Kliknutím na "Save" se dokument uloží do lokální paměti prohlížeče pomocí Web Storage. Kliknutím na "Preview" se zobrazí dokument v textové formě vhodné pro jeho vyexportování.
+V záhlaví dokumentu se nachází jeho název a překladový pár který je použit k podpoře překladu. Název i překladový pár jdou změnit v nabídce po kliknutí na tlačítko \clqq Settings\crqq . Kliknutím na \clqq Save\crqq  se dokument uloží do lokální paměti prohlížeče. Kliknutím na \clqq Preview\crqq  se zobrazí dokument v textové formě vhodné pro jeho vyexportování.
 
-Dokument je při začátku překladu rozdělen na věty. Věty zdrojového textu překladu se při zobrazení dokumentu nachází v levé části obrazovky. Jejich odpovídající překlady na straně pravé. Aktuálně překládaná věta se nachází v modrém boxu. Na jinou větu lze přepnou kliknutím myší na příslušnou větu, nebo pomocí klávesových tlačítek "Page Up" respektive "Page Down".
+Dokument je při začátku překladu rozdělen na věty. Věty zdrojového textu překladu se při zobrazení dokumentu nachází v levé části obrazovky. Jejich odpovídající překlady na straně pravé. Aktuálně překládaná věta se nachází v modrém boxu. Na jinou větu lze přepnou kliknutím myší na příslušnou větu, nebo pomocí kláves \clqq Page Up\crqq  respektive \clqq Page Down\crqq .
 
-Aktuální věta má v boxu nejprve znění ve zdrojovém textu, pod ním je textová oblast pro vkládání překladu věty. Překladatel může využít nápovědy s překladem. Pod textovou oblastí je seznam nápověd od serverové části. Pokud by chtěl překladatel nějakou nápovědu použít, může jí vybrat buď tím, že na ni najede myší, nebo pomocí kurzorových kláves "šipka nahoru" a "šipka dolů". Pomocí kliku myší, nebo stisknutím klávesy "Enter" použije celou nápovědu. Klávesou "tabulátor" použije pouze první slovo nápovědy. 
+Aktuálně překládaná věta má v modrém boxu nejprve znění ve zdrojovém textu, pod ním je textová oblast do které překladatel píše překlad. Pod textovou oblastí se nachází seznam návrhů překladu vygenerovaný serverovou částí. Pro použití nápovědy může překladatel na návrh buď kliknout myší, nebo návrh vybrat pomocí kursorových šipek a stisknutí klávesy \clqq Enter\crqq . Stisknutím klávesy \clqq tabulátor\crqq  vybere překladatel jen první slovo návrhu.
 
-Další možností nápovědy je použít tabulku překladových možností. Tato tabulka obsahuje v záhlaví slova zdrojového textu. Pod těmito slovy jsou zobrazeny nejpravděpodobnější varianty překladu podle Mosese. Kliknutím myší jde opět tato nápověda použít při překladu. Záhlaví tabulky zároveň slouží k předávání informací serveru o tom, které části věty jsou přeložené. Kliknutím na slovo v záhlaví zmodrá jeho pozadí. Zmodralé části považuje server za přeložené a při poskytování nápovědy je neuvažuje.
+Dalším druhem nápovědy je tabulka ve spodní části modrého boxu. Záhlaví tabulky tvoří slova aktuální zdrojové věty překladu. Kliknutím slovo v záhlaví zmodrá jeho pozadí. Slova s modrým pozadím určují části zdrojové věty které již překladatel přeložil. Této informace používá CAT systém v požadavku k serveru na vygenerování návrhů překladu.
 
-Překladatel může kdykoliv přerušit překlad a později se k němu ve svém prohlížeči opět vrátit. Na úvodní stránce se mu v sekci "Your translations" zobrazí všechny jeho překlady spolu s názvem překladového páru a procentem udávajícím, kolik vět je již přeloženo. Po kliknutí na ikonku s křížkem má možnost daný dokument smazat.
+Překladatel může kdykoliv přerušit překlad a později se k němu ve svém prohlížeči opět vrátit. Na úvodní stránce se mu v sekci \clqq Your translations\crqq  zobrazí všechny jeho překlady spolu s názvem překladového páru a procentem udávajícím, kolik vět je již přeloženo. Kliknutím myší se mu daný dokument znovu otevře. Po kliknutí na ikonku s křížkem má možnost daný dokument smazat z paměti prohlížeče.
+
 
 % Ukázka použití některých konstrukcí LateXu (odkomentujte, chcete-li)
 % \include{ukazka}
@@ -593,10 +633,16 @@ Překladatel může kdykoliv přerušit překlad a později se k němu ve svém 
 \include{zaver}
 
 %%% Seznam použité literatury
-\include{literatura}
+%\include{literatura}
+
+\openright
+
+\def\bibname{Seznam použité literatury}
+\bibliographystyle{czechiso}
+\bibliography{prace}
 
 %%% Tabulky v diplomové práci, existují-li.
-\chapwithtoc{Seznam tabulek}
+%\chapwithtoc{Seznam tabulek}
 
 %%% Použité zkratky v diplomové práci, existují-li, včetně jejich vysvětlení.
 \chapwithtoc{Seznam použitých zkratek}
@@ -625,9 +671,5 @@ another-pair-name
 path/to/another/moses.ini
 }
 
-\openright
-
-\bibliographystyle{alpha}
-\bibliography{prace}
-
 \end{document}
+

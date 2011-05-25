@@ -1,9 +1,29 @@
-\begin{thebibliography}{KH09}
+\begin{thebibliography}{1}
+\providecommand{\url}[1]{\texttt{#1}}
+\providecommand{\urlprefix}{URL }
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi:\discretionary{}{}{}#1}\else
+  \providecommand{\doi}{doi:\discretionary{}{}{}\begingroup
+  \urlstyle{rm}\Url}\fi
+\providecommand{\selectlanguage}[1]{\relax}
+\providecommand{\eprint}[2][]{\url{#2}}
 
-\bibitem[KH09]{koehn:haddow:2009}
-Philipp Koehn and Barry Haddow.
-\newblock {Interactive Assistance to Human Translators using Statistical
-  Machine Translation Methods}.
-\newblock In {\em MT Summit XII}, 2009.
+\bibitem{koehn:2009}
+Koehn, P.: {A Web-Based Interactive Computer Aided Translation Tool}. In
+  \emph{ACL Software demonstration session}, 2009.
+\newline\urlprefix\url{http://www.aclweb.org/anthology/P/P09/P09-4005.pdf}
+
+\bibitem{koehn:haddow:2009}
+Koehn, P.; Haddow, B.: {Interactive Assistance to Human Translators using
+  Statistical Machine Translation Methods}. In \emph{MT Summit XII}, 2009.
+\newline\urlprefix\url{http://www.mt-archive.info/MTS-2009-Koehn-2.pdf}
+
+\bibitem{koehn-EtAl:2007:PosterDemo}
+Koehn, P.; Hoang, H.; Birch, A.; aj.: {Moses: Open Source Toolkit for
+  Statistical Machine Translation}. In \emph{ACL 2007, Proceedings of the 45th
+  Annual Meeting of the Association for Computational Linguistics Companion
+  Volume Proceedings of the Demo and Poster Sessions}, Prague, Czech Republic:
+  Association for Computational Linguistics, June 2007, s. 177--180.
+\newline\urlprefix\url{http://www.aclweb.org/anthology/P/P07/P07-2045}
 
 \end{thebibliography}
